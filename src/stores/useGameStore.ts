@@ -27,7 +27,7 @@ export const useGameStore = defineStore('game', () => {
     bet.value = { coinsPerLine: coins, linesPlayed: 20, totalBet: coins * 20 }
   }
 
-  function setResult(result: SpinResult): void {
+  function setResult(result: SpinResult | null): void {
     lastResult.value = result
   }
 
@@ -40,10 +40,19 @@ export const useGameStore = defineStore('game', () => {
     error.value = null
   }
 
+  function setFreeSpins(count: number): void {
+    freeSpinsRemaining.value = count
+  }
+
+  function decrementFreeSpins(): void {
+    freeSpinsRemaining.value = Math.max(0, freeSpinsRemaining.value - 1)
+  }
+
   return {
     phase, balance, bet, lastResult,
     freeSpinsRemaining, autoplayRemaining, error,
     canSpin, setPhase, updateBalance, setBetCoin,
     setResult, setError, resetError,
+    setFreeSpins, decrementFreeSpins,
   }
 })
