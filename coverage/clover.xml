@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1782566954449" clover="3.2.0">
+  <project timestamp="1782566954449" name="All files">
+    <metrics statements="81" coveredstatements="81" conditionals="24" coveredconditionals="23" methods="21" coveredmethods="21" elements="126" coveredelements="125" complexity="0" loc="81" ncloc="81" packages="5" files="13" classes="13"/>
+    <package name="composables">
+      <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="useAudio.ts" path="C:\Users\chava\Documents\cautious-adventure\neon-reels\src\composables\useAudio.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="useGameMachine.ts" path="C:\Users\chava\Documents\cautious-adventure\neon-reels\src\composables\useGameMachine.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="usePixiApp.ts" path="C:\Users\chava\Documents\cautious-adventure\neon-reels\src\composables\usePixiApp.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="game.config">
+      <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="paylines.ts" path="C:\Users\chava\Documents\cautious-adventure\neon-reels\src\game\config\paylines.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="3" type="stmt"/>
+      </file>
+      <file name="reelStrips.ts" path="C:\Users\chava\Documents\cautious-adventure\neon-reels\src\game\config\reelStrips.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="3" type="stmt"/>
+      </file>
+      <file name="symbols.ts" path="C:\Users\chava\Documents\cautious-adventure\neon-reels\src\game\config\symbols.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="game.engine">
+      <metrics statements="31" coveredstatements="31" conditionals="16" coveredconditionals="15" methods="8" coveredmethods="8"/>
+      <file name="PaylineEvaluator.ts" path="C:\Users\chava\Documents\cautious-adventure\neon-reels\src\game\engine\PaylineEvaluator.ts">
+        <metrics statements="30" coveredstatements="30" conditionals="16" coveredconditionals="15" methods="6" coveredmethods="6"/>
+        <line num="5" count="2" type="stmt"/>
+        <line num="9" count="19" type="stmt"/>
+        <line num="11" count="19" type="stmt"/>
+        <line num="12" count="380" type="stmt"/>
+        <line num="13" count="380" type="stmt"/>
+        <line num="14" count="1900" type="stmt"/>
+        <line num="17" count="380" type="stmt"/>
+        <line num="19" count="380" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="379" type="stmt"/>
+        <line num="22" count="379" type="stmt"/>
+        <line num="24" count="379" type="stmt"/>
+        <line num="25" count="655" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="316" type="stmt"/>
+        <line num="28" count="339" type="stmt"/>
+        <line num="32" count="1723" type="stmt"/>
+        <line num="33" count="379" type="cond" truecount="1" falsecount="1"/>
+        <line num="35" count="379" type="stmt"/>
+        <line num="36" count="379" type="cond" truecount="2" falsecount="0"/>
+        <line num="38" count="103" type="stmt"/>
+        <line num="39" count="103" type="stmt"/>
+        <line num="40" count="358" type="stmt"/>
+        <line num="43" count="103" type="stmt"/>
+        <line num="52" count="380" type="stmt"/>
+        <line num="56" count="380" type="stmt"/>
+        <line num="57" count="460" type="cond" truecount="2" falsecount="0"/>
+        <line num="60" count="380" type="cond" truecount="2" falsecount="0"/>
+        <line num="62" count="379" type="stmt"/>
+        <line num="63" count="1895" type="cond" truecount="2" falsecount="0"/>
+        <line num="64" count="1777" type="cond" truecount="2" falsecount="0"/>
+        <line num="65" count="1612" type="stmt"/>
+      </file>
+      <file name="RNGEngine.ts" path="C:\Users\chava\Documents\cautious-adventure\neon-reels\src\game\engine\RNGEngine.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="5" count="5050" type="stmt"/>
+      </file>
+    </package>
+    <package name="game.services">
+      <metrics statements="24" coveredstatements="24" conditionals="6" coveredconditionals="6" methods="4" coveredmethods="4"/>
+      <file name="ClientSpinService.ts" path="C:\Users\chava\Documents\cautious-adventure\neon-reels\src\game\services\ClientSpinService.ts">
+        <metrics statements="24" coveredstatements="24" conditionals="6" coveredconditionals="6" methods="4" coveredmethods="4"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="32" count="8" type="stmt"/>
+        <line num="34" count="8" type="stmt"/>
+        <line num="35" count="40" type="stmt"/>
+        <line num="36" count="40" type="stmt"/>
+        <line num="41" count="40" type="stmt"/>
+        <line num="44" count="8" type="stmt"/>
+        <line num="46" count="8" type="stmt"/>
+        <line num="48" count="8" type="stmt"/>
+        <line num="49" count="8" type="stmt"/>
+        <line num="50" count="40" type="stmt"/>
+        <line num="51" count="120" type="cond" truecount="2" falsecount="0"/>
+        <line num="52" count="8" type="stmt"/>
+        <line num="57" count="8" type="stmt"/>
+        <line num="58" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="60" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="61" count="29" type="stmt"/>
+        <line num="62" count="8" type="stmt"/>
+        <line num="64" count="8" type="stmt"/>
+      </file>
+      <file name="HistoryService.ts" path="C:\Users\chava\Documents\cautious-adventure\neon-reels\src\game\services\HistoryService.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="SpinService.ts" path="C:\Users\chava\Documents\cautious-adventure\neon-reels\src\game\services\SpinService.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="stores">
+      <metrics statements="23" coveredstatements="23" conditionals="2" coveredconditionals="2" methods="9" coveredmethods="9"/>
+      <file name="useGameStore.ts" path="C:\Users\chava\Documents\cautious-adventure\neon-reels\src\stores\useGameStore.ts">
+        <metrics statements="18" coveredstatements="18" conditionals="2" coveredconditionals="2" methods="8" coveredmethods="8"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="14" type="stmt"/>
+        <line num="7" count="14" type="stmt"/>
+        <line num="8" count="14" type="stmt"/>
+        <line num="9" count="14" type="stmt"/>
+        <line num="10" count="14" type="stmt"/>
+        <line num="11" count="14" type="stmt"/>
+        <line num="12" count="14" type="stmt"/>
+        <line num="14" count="14" type="stmt"/>
+        <line num="15" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="35" count="2" type="stmt"/>
+        <line num="36" count="2" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="43" count="14" type="stmt"/>
+      </file>
+      <file name="useHistoryStore.ts" path="C:\Users\chava\Documents\cautious-adventure\neon-reels\src\stores\useHistoryStore.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

@@ -1,0 +1,9 @@
+@use 'variables' as *;
+@use 'reset';
+
+body {
+  background: $bg-primary;
+  color: $text-primary;
+  font-family: 'Orbitron', sans-serif;
+  overflow: hidden;
+}
