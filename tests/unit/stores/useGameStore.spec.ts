@@ -83,6 +83,39 @@ describe('useGameStore', () => {
     expect(store.error).toBeNull()
   })
 
+  it('setResult(null) clears lastResult to null', () => {
+    const store = useGameStore()
+    store.setResult(null)
+    expect(store.lastResult).toBeNull()
+  })
+
+  it('setFreeSpins(10) sets freeSpinsRemaining to 10', () => {
+    const store = useGameStore()
+    store.setFreeSpins(10)
+    expect(store.freeSpinsRemaining).toBe(10)
+  })
+
+  it('decrementFreeSpins() reduces freeSpinsRemaining by 1', () => {
+    const store = useGameStore()
+    store.setFreeSpins(5)
+    store.decrementFreeSpins()
+    expect(store.freeSpinsRemaining).toBe(4)
+  })
+
+  it('decrementFreeSpins() does not go below 0', () => {
+    const store = useGameStore()
+    store.setFreeSpins(0)
+    store.decrementFreeSpins()
+    expect(store.freeSpinsRemaining).toBe(0)
+  })
+
+  it('resetError() does not change the current phase', () => {
+    const store = useGameStore()
+    store.setPhase('SPINNING')
+    store.resetError()
+    expect(store.phase).toBe('SPINNING')
+  })
+
   it('setResult stores the last spin result', () => {
     const store = useGameStore()
     store.setResult({
