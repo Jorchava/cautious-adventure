@@ -1,6 +1,7 @@
 import { Container, Graphics, Ticker } from 'pixi.js'
 import type { IScene } from '@/pixi/IScene'
 import { ReelComponent } from '@/pixi/components/ReelComponent'
+import { WinLine } from '@/pixi/components/WinLine'
 import {
   REEL_WIDTH,
   REEL_GAP,
@@ -16,6 +17,9 @@ import {
 import { REEL_STRIPS } from '@/game/config/reelStrips'
 import type { SpinResult } from '@/types/game.types'
 
+const WIN_ANIMATION_DURATION_MS = 2000
+const DIM_ALPHA = 0.35
+
 interface AppWithTicker {
   ticker: {
     add: (fn: (t: Ticker) => void) => void
@@ -28,11 +32,15 @@ export class GameScene extends Container implements IScene {
   private reelContainer!: Container
   private stoppedCount = 0
   private tickerFns: ((t: Ticker) => void)[] = []
+  private winLine!: WinLine
 
   async init(): Promise<void> {
     this.buildBackground()
     this.buildReels()
     this.buildFrame()
+
+    this.winLine = new WinLine()
+    this.addChild(this.winLine)
   }
 
   private buildBackground(): void {
@@ -102,6 +110,44 @@ export class GameScene extends Container implements IScene {
         }
       })
     })
+  }
+
+  showWin(result: SpinResult): void {
+    result.paylines.forEach((pl) => this.winLine.drawPayline(pl))
+
+    const winKeys = new Set(
+      result.paylines.flatMap((pl) =>
+        pl.positions.map(([reelIdx, row]) => `${reelIdx},${row}`),
+      ),
+    )
+
+    this.reels.forEach((reel, reelIndex) => {
+      for (let row = 0; row < VISIBLE_ROWS; row++) {
+        const sprite = reel.getSpriteAt(row)
+        if (sprite) {
+          sprite.alpha = winKeys.has(`${reelIndex},${row}`) ? 1.0 : DIM_ALPHA
+        }
+      }
+    })
+  }
+
+  clearWin(): void {
+    this.winLine.clearAll()
+
+    this.reels.forEach((reel) => {
+      for (let row = 0; row < VISIBLE_ROWS; row++) {
+        const sprite = reel.getSpriteAt(row)
+        if (sprite) sprite.alpha = 1.0
+      }
+    })
+  }
+
+  async showWinAnimation(result: SpinResult): Promise<void> {
+    this.showWin(result)
+    // Note: in production, store this timeout ref and cancel it in onUnmounted
+    // to prevent completePaying() firing after component teardown
+    await new Promise<void>((resolve) => setTimeout(resolve, WIN_ANIMATION_DURATION_MS))
+    this.clearWin()
   }
 
   override destroy(options?: { children?: boolean }): void {

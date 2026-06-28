@@ -47,11 +47,14 @@ watch(isReady, async (ready) => {
 
 watch(
   () => gameStore.phase,
-  (phase) => {
+  async (phase) => {
     if (!gameScene) return
 
     if (phase === 'SPINNING' && gameStore.lastResult) {
       gameScene.startSpin(gameStore.lastResult as SpinResult, app)
+    } else if (phase === 'PAYING' && gameStore.lastResult) {
+      await gameScene.showWinAnimation(gameStore.lastResult)
+      machine.completePaying()
     }
   },
 )

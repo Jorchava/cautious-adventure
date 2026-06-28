@@ -163,13 +163,27 @@ Full transition table: `docs/architecture.md` section 6.2
 - [x] src/assets/styles/main.scss — global reset styles
 - [x] 136 tests passing (102 baseline + 34 Session 3)
 - [x] pnpm tsc --noEmit — zero errors
-- [x] pnpm lint — zero errors (3 warnings: test component pattern)
+- [x] pnpm lint — zero errors (2 warnings: vue/one-component-per-file)
 
-### Next — Session 4 (Win Lines + UI Layer)
-- [ ] Win line rendering (Graphics-drawn payline highlights)
-- [ ] Symbol win/dim animations
-- [ ] BalanceDisplay.vue, BetPanel.vue, Paytable.vue
-- [ ] Wire completePaying() after win animation
+### Completed — Session 4 (Win Lines + Core UI)
+- [x] src/pixi/components/WinLine.ts — Graphics-drawn payline highlights
+- [x] GameScene win animation methods (showWin, clearWin, showWinAnimation)
+- [x] ReelComponent.getSpriteAt() — sprite access by row index
+- [x] GameCanvas.vue PAYING phase handler — awaits showWinAnimation, calls completePaying()
+- [x] BalanceDisplay.vue — live credits + win amount display (TDD)
+- [x] BetPanel.vue — coin value selector with validation (TDD)
+- [x] Paytable.vue — full-screen overlay with symbol payouts
+- [x] App.vue — wired HUD with BalanceDisplay, BetPanel, Paytable toggle
+- [x] 152 tests passing (136 baseline + 16 Session 4)
+- [x] pnpm tsc — zero errors
+- [x] pnpm lint — zero errors (2 pre-existing warnings: vue/one-component-per-file)
+
+### Next — Session 5 (Free Spins + Polish)
+- [ ] Free spins intro screen + flow
+- [ ] Autoplay (5 / 10 / 25 spins with stop conditions)
+- [ ] useAudio.ts wired via @pixi/sound
+- [ ] WinHistory.vue + json-server REST integration
+- [ ] Neon glow filter on winning symbols
 
 ---
 
