@@ -1,4 +1,6 @@
-# Neon Reels Kickoff Prompt
+# Session 1 Prompt
+
+## Neon Reels Kickoff Prompt
 
 > Copy this entire document into your session to begin development as of 06272026 model: DeepSeek v4 Flash, Zen open code's provider, free plan.
 > Do not abbreviate or skip sections. Every part exists to prevent a known category of mistake.

@@ -1,28 +1,23 @@
-import { Application } from 'pixi.js'
-import type { IScene } from '@/types/pixi.types'
+import { Application, Container } from 'pixi.js'
+import type { IScene } from '@/pixi/IScene'
 
 export class SceneManager {
-  private app: Application
-  private currentScene: IScene | null = null
+  private current: IScene | null = null
 
-  constructor(app: Application) {
-    this.app = app
-  }
+  constructor(private readonly app: Application) {}
 
-  async switchScene(scene: IScene): Promise<void> {
-    if (this.currentScene) {
-      this.currentScene.destroy({ children: true })
-      this.app.stage.removeChild(this.currentScene)
+  async switchTo(scene: IScene): Promise<void> {
+    if (this.current) {
+      this.current.destroy({ children: true })
+      this.app.stage.removeChild(this.current as unknown as Container)
     }
-    this.currentScene = scene
+    this.current = scene
+    this.app.stage.addChild(scene as unknown as Container)
     await scene.init()
-    this.app.stage.addChild(scene)
   }
 
   destroy(): void {
-    if (this.currentScene) {
-      this.currentScene.destroy({ children: true })
-      this.app.stage.removeChild(this.currentScene)
-    }
+    this.current?.destroy({ children: true })
+    this.current = null
   }
 }

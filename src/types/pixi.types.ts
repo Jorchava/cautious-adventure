@@ -1,5 +1,1 @@
-import type { Container } from 'pixi.js'
-
-export interface IScene extends Container {
-  init(): Promise<void>
-}
+export type { IScene } from '@/pixi/IScene'

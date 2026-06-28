@@ -136,18 +136,40 @@ Full transition table: `docs/architecture.md` section 6.2
 
 ## Development State
 
+### Completed — Sessions 1 & 2
 - [x] Governance files: AGENTS.md, SKILLS.md, PROJECT_CONTEXT.md
 - [x] docs/architecture.md — complete
 - [x] docs/pixi-v8-patterns.md — complete
-- [x] OPEN_CODE_PROMPT.md — Session 1 prompt ready
-- [ ] Project scaffolded
-- [ ] src/types/game.types.ts
-- [ ] src/game/ — config, engine, services
-- [ ] src/stores/
-- [ ] src/composables/useGameMachine.ts
-- [ ] src/pixi/ — scenes and components
-- [ ] src/components/ — Vue UI
-- [ ] First playable build
+- [x] Project scaffolded (Vue 3 + Vite + Pinia + PixiJS v8 + Vitest)
+- [x] src/types/game.types.ts — all game types defined
+- [x] src/game/ — config (symbols, reelStrips, paylines), engine (RNGEngine, PaylineEvaluator), services (SpinService, ClientSpinService, HistoryService, ClientHistoryService)
+- [x] src/stores/ — useGameStore, useHistoryStore (composition pattern)
+- [x] src/composables/useGameMachine.ts — FSM with all 8 states
+- [x] 102 tests passing (game logic, stores, composables, config)
+- [x] TypeScript strict mode — zero tsc errors
+
+### Completed — Session 3 (PixiJS Rendering Foundation)
+- [x] src/pixi/constants.ts — layout/animation constants
+- [x] src/pixi/utils/reelMath.ts — pure animation math (TDD, 21 tests)
+- [x] src/pixi/SceneManager.ts — scene lifecycle with switchTo/destroy
+- [x] src/pixi/IScene.ts — scene interface (init + destroy)
+- [x] src/pixi/components/SymbolSprite.ts — placeholder symbol display with colors
+- [x] src/pixi/components/ReelComponent.ts — reel strip animation with deceleration + snap
+- [x] src/pixi/scenes/LoadingScene.ts — asset loading with progress bar
+- [x] src/pixi/scenes/GameScene.ts — 5-reel composition with cascade stop
+- [x] src/composables/usePixiApp.ts — Application lifecycle composable (TDD, 4 tests)
+- [x] src/components/GameCanvas.vue — Vue/PixiJS bridge with phase watcher
+- [x] src/components/SpinButton.vue — wired to machine.spin()
+- [x] src/assets/styles/main.scss — global reset styles
+- [x] 136 tests passing (102 baseline + 34 Session 3)
+- [x] pnpm tsc --noEmit — zero errors
+- [x] pnpm lint — zero errors (3 warnings: test component pattern)
+
+### Next — Session 4 (Win Lines + UI Layer)
+- [ ] Win line rendering (Graphics-drawn payline highlights)
+- [ ] Symbol win/dim animations
+- [ ] BalanceDisplay.vue, BetPanel.vue, Paytable.vue
+- [ ] Wire completePaying() after win animation
 
 ---
 
