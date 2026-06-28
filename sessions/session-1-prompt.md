@@ -1,4 +1,6 @@
-# Open Code — Neon Reels Kickoff Prompt
+# Session 1 Prompt
+
+## Neon Reels Kickoff Prompt
 
 > Copy this entire document into your Open Code session to begin development.
 > Do not abbreviate or skip sections. Every part exists to prevent a known category of mistake.
@@ -12,10 +14,10 @@ called **Neon Reels**.
 
 Read these files in full, in this order, before writing a single line of code:
 
-1. `AGENTS.md`              — Your behavioral rules and code standards (non-negotiable)
-2. `SKILLS.md`              — Approved CLI commands and output contracts
-3. `PROJECT_CONTEXT.md`     — Project goals, constraints, and stack decisions
-4. `docs/architecture.md`   — Full technical specification (your blueprint for the entire project)
+1. `AGENTS.md` — Your behavioral rules and code standards (non-negotiable)
+2. `SKILLS.md` — Approved CLI commands and output contracts
+3. `PROJECT_CONTEXT.md` — Project goals, constraints, and stack decisions
+4. `docs/architecture.md` — Full technical specification (your blueprint for the entire project)
 5. `docs/pixi-v8-patterns.md` — Verified PixiJS v8 patterns (consult before any PixiJS code)
 
 **Confirm you have read all five files before proceeding.**
@@ -138,9 +140,9 @@ Create `tsconfig.json`:
 Create `vitest.config.ts`:
 
 ```typescript
-import { defineConfig } from 'vitest/config'
-import vue from '@vitejs/plugin-vue'
-import { resolve } from 'path'
+import { defineConfig } from 'vitest/config';
+import vue from '@vitejs/plugin-vue';
+import { resolve } from 'path';
 
 export default defineConfig({
   plugins: [vue()],
@@ -157,7 +159,7 @@ export default defineConfig({
   resolve: {
     alias: { '@': resolve(__dirname, 'src') },
   },
-})
+});
 ```
 
 Create `tests/setup.ts`:
@@ -165,7 +167,7 @@ Create `tests/setup.ts`:
 ```typescript
 // Global test setup
 // Extend with vi.mock entries for canvas/WebGL if needed
-import { vi } from 'vitest'
+import { vi } from 'vitest';
 
 // PixiJS requires canvas — mock it in test environment
 vi.mock('pixi.js', () => ({
@@ -181,10 +183,24 @@ vi.mock('pixi.js', () => ({
     loadBundle: vi.fn().mockResolvedValue({}),
     addBundle: vi.fn(),
   },
-  Container: vi.fn(() => ({ addChild: vi.fn(), removeChild: vi.fn(), destroy: vi.fn() })),
-  Sprite: vi.fn(() => ({ position: { set: vi.fn() }, anchor: { set: vi.fn() }, destroy: vi.fn() })),
-  Graphics: vi.fn(() => ({ rect: vi.fn().mockReturnThis(), fill: vi.fn().mockReturnThis(), moveTo: vi.fn().mockReturnThis(), lineTo: vi.fn().mockReturnThis(), stroke: vi.fn() })),
-}))
+  Container: vi.fn(() => ({
+    addChild: vi.fn(),
+    removeChild: vi.fn(),
+    destroy: vi.fn(),
+  })),
+  Sprite: vi.fn(() => ({
+    position: { set: vi.fn() },
+    anchor: { set: vi.fn() },
+    destroy: vi.fn(),
+  })),
+  Graphics: vi.fn(() => ({
+    rect: vi.fn().mockReturnThis(),
+    fill: vi.fn().mockReturnThis(),
+    moveTo: vi.fn().mockReturnThis(),
+    lineTo: vi.fn().mockReturnThis(),
+    stroke: vi.fn(),
+  })),
+}));
 ```
 
 **Verify:** `pnpm tsc --noEmit` passes (or fails only on empty placeholder files — that is acceptable).
@@ -196,6 +212,7 @@ vi.mock('pixi.js', () => ({
 Implement `src/types/game.types.ts` with ALL types from `docs/architecture.md` section 6.3.
 
 Rules:
+
 - No `any` anywhere
 - No optional properties unless explicitly listed in the architecture doc as optional
 - Export every type
@@ -212,57 +229,72 @@ Rules:
 Create `tests/unit/game/config.spec.ts`:
 
 ```typescript
-import { describe, it, expect } from 'vitest'
-import { PAYLINES } from '@/game/config/paylines'
-import { REEL_STRIPS } from '@/game/config/reelStrips'
-import { SYMBOL_DEFINITIONS } from '@/game/config/symbols'
-import type { SymbolId } from '@/types/game.types'
+import { describe, it, expect } from 'vitest';
+import { PAYLINES } from '@/game/config/paylines';
+import { REEL_STRIPS } from '@/game/config/reelStrips';
+import { SYMBOL_DEFINITIONS } from '@/game/config/symbols';
+import type { SymbolId } from '@/types/game.types';
 
-const VALID_SYMBOL_IDS: SymbolId[] = ['WILD', 'SCATTER', 'HIGH_A', 'HIGH_B', 'LOW_A', 'LOW_B']
+const VALID_SYMBOL_IDS: SymbolId[] = [
+  'WILD',
+  'SCATTER',
+  'HIGH_A',
+  'HIGH_B',
+  'LOW_A',
+  'LOW_B',
+];
 
 describe('PAYLINES', () => {
-  it('has exactly 20 paylines', () => expect(PAYLINES).toHaveLength(20))
+  it('has exactly 20 paylines', () => expect(PAYLINES).toHaveLength(20));
   it('each payline has exactly 5 row indices', () => {
-    PAYLINES.forEach(line => expect(line).toHaveLength(5))
-  })
+    PAYLINES.forEach((line) => expect(line).toHaveLength(5));
+  });
   it('all row indices are 0, 1, or 2', () => {
-    PAYLINES.forEach(line => line.forEach(row => expect([0, 1, 2]).toContain(row)))
-  })
-})
+    PAYLINES.forEach((line) =>
+      line.forEach((row) => expect([0, 1, 2]).toContain(row)),
+    );
+  });
+});
 
 describe('REEL_STRIPS', () => {
-  it('has exactly 5 reel strips', () => expect(REEL_STRIPS).toHaveLength(5))
+  it('has exactly 5 reel strips', () => expect(REEL_STRIPS).toHaveLength(5));
   it('each strip has at least 20 symbols', () => {
-    REEL_STRIPS.forEach(strip => expect(strip.length).toBeGreaterThanOrEqual(20))
-  })
+    REEL_STRIPS.forEach((strip) =>
+      expect(strip.length).toBeGreaterThanOrEqual(20),
+    );
+  });
   it('all symbol IDs are valid', () => {
-    REEL_STRIPS.forEach(strip =>
-      strip.forEach(id => expect(VALID_SYMBOL_IDS).toContain(id))
-    )
-  })
-})
+    REEL_STRIPS.forEach((strip) =>
+      strip.forEach((id) => expect(VALID_SYMBOL_IDS).toContain(id)),
+    );
+  });
+});
 
 describe('SYMBOL_DEFINITIONS', () => {
-  it('has exactly 6 symbol definitions', () => expect(SYMBOL_DEFINITIONS).toHaveLength(6))
+  it('has exactly 6 symbol definitions', () =>
+    expect(SYMBOL_DEFINITIONS).toHaveLength(6));
   it('each symbol has an id, displayName, and payouts object', () => {
-    SYMBOL_DEFINITIONS.forEach(sym => {
-      expect(sym.id).toBeDefined()
-      expect(sym.displayName).toBeDefined()
-      expect(sym.payouts).toBeDefined()
-    })
-  })
+    SYMBOL_DEFINITIONS.forEach((sym) => {
+      expect(sym.id).toBeDefined();
+      expect(sym.displayName).toBeDefined();
+      expect(sym.payouts).toBeDefined();
+    });
+  });
   it('LOW_B is the only symbol with a payout for 2 matches', () => {
-    const lowB = SYMBOL_DEFINITIONS.find(s => s.id === 'LOW_B')
-    expect(lowB?.payouts[2]).toBeGreaterThan(0)
-    const others = SYMBOL_DEFINITIONS.filter(s => s.id !== 'LOW_B' && s.id !== 'SCATTER')
-    others.forEach(s => expect(s.payouts[2]).toBeUndefined())
-  })
-})
+    const lowB = SYMBOL_DEFINITIONS.find((s) => s.id === 'LOW_B');
+    expect(lowB?.payouts[2]).toBeGreaterThan(0);
+    const others = SYMBOL_DEFINITIONS.filter(
+      (s) => s.id !== 'LOW_B' && s.id !== 'SCATTER',
+    );
+    others.forEach((s) => expect(s.payouts[2]).toBeUndefined());
+  });
+});
 ```
 
 Run: `pnpm vitest run tests/unit/game/config.spec.ts` — **confirm it fails (red) for the right reason.**
 
 Then implement:
+
 - `src/game/config/paylines.ts` — from `docs/architecture.md` section 4.3
 - `src/game/config/reelStrips.ts` — from `docs/architecture.md` section 4.4
 - `src/game/config/symbols.ts` — from `docs/architecture.md` section 4.2
@@ -278,41 +310,41 @@ Then implement:
 Create `tests/unit/game/RNGEngine.spec.ts`:
 
 ```typescript
-import { describe, it, expect } from 'vitest'
-import { RNGEngine } from '@/game/engine/RNGEngine'
-import { REEL_STRIPS } from '@/game/config/reelStrips'
+import { describe, it, expect } from 'vitest';
+import { RNGEngine } from '@/game/engine/RNGEngine';
+import { REEL_STRIPS } from '@/game/config/reelStrips';
 
 describe('RNGEngine', () => {
-  const engine = new RNGEngine()
+  const engine = new RNGEngine();
 
   it('returns exactly 5 stop positions', () => {
-    const positions = engine.generateStopPositions()
-    expect(positions).toHaveLength(5)
-  })
+    const positions = engine.generateStopPositions();
+    expect(positions).toHaveLength(5);
+  });
 
   it('each stop position is within bounds of its reel strip', () => {
-    const positions = engine.generateStopPositions()
+    const positions = engine.generateStopPositions();
     positions.forEach((pos, reelIndex) => {
-      expect(pos).toBeGreaterThanOrEqual(0)
-      expect(pos).toBeLessThan(REEL_STRIPS[reelIndex].length)
-    })
-  })
+      expect(pos).toBeGreaterThanOrEqual(0);
+      expect(pos).toBeLessThan(REEL_STRIPS[reelIndex].length);
+    });
+  });
 
   it('generates non-trivially varied positions across 1000 spins', () => {
-    const counts = Array.from({ length: 5 }, () => new Map<number, number>())
+    const counts = Array.from({ length: 5 }, () => new Map<number, number>());
     for (let i = 0; i < 1000; i++) {
       engine.generateStopPositions().forEach((pos, reelIndex) => {
-        counts[reelIndex].set(pos, (counts[reelIndex].get(pos) ?? 0) + 1)
-      })
+        counts[reelIndex].set(pos, (counts[reelIndex].get(pos) ?? 0) + 1);
+      });
     }
     // No single position should appear > 15% of the time (strips have 22 symbols)
     counts.forEach((reelCounts, reelIndex) => {
       reelCounts.forEach((count) => {
-        expect(count / 1000).toBeLessThan(0.15)
-      })
-    })
-  })
-})
+        expect(count / 1000).toBeLessThan(0.15);
+      });
+    });
+  });
+});
 ```
 
 Run: confirm red. Then implement `src/game/engine/RNGEngine.ts`.
@@ -347,11 +379,12 @@ The evaluator signature:
 
 ```typescript
 export class PaylineEvaluator {
-  evaluate(reels: ReelResult[], bet: BetConfig): PaylineResult[]
+  evaluate(reels: ReelResult[], bet: BetConfig): PaylineResult[];
 }
 ```
 
 Internal logic:
+
 1. For each of the 20 paylines:
    - Extract the symbol at each `[reelIndex, rowIndex]` position
    - Resolve WILD substitutions (WILD becomes the adjacent non-WILD, non-SCATTER symbol)
@@ -393,11 +426,13 @@ Implement `src/game/services/SpinService.ts` (interface) and `src/game/services/
 **Write tests first.** `tests/unit/stores/useGameStore.spec.ts`:
 
 ```typescript
-import { setActivePinia, createPinia } from 'pinia'
-import { beforeEach, describe, it, expect } from 'vitest'
-import { useGameStore } from '@/stores/useGameStore'
+import { setActivePinia, createPinia } from 'pinia';
+import { beforeEach, describe, it, expect } from 'vitest';
+import { useGameStore } from '@/stores/useGameStore';
 
-beforeEach(() => { setActivePinia(createPinia()) })
+beforeEach(() => {
+  setActivePinia(createPinia());
+});
 
 // Cases to cover:
 // 1. Initial phase is 'IDLE'
@@ -435,6 +470,7 @@ Before reporting session complete, confirm every item:
 ```
 
 **Report format:**
+
 - Files created (count)
 - Test count (passed / total)
 - Any deviations from docs/architecture.md (with reasoning)
@@ -444,14 +480,14 @@ Before reporting session complete, confirm every item:
 
 ## Sessions Roadmap
 
-| Session | Focus |
-|---------|-------|
-| **1 (this session)** | Scaffold + game logic layer + stores (typed, tested) |
-| **2** | `useGameMachine.ts` (FSM, all 8 states), `HistoryService`, `useHistoryStore` |
-| **3** | PixiJS `SceneManager`, `LoadingScene`, `GameScene` scaffold, `ReelComponent` + animation |
-| **4** | Win evaluation visuals (`WinLine`, symbol dim/pulse), Vue UI components |
-| **5** | Free spins flow, Autoplay, `useAudio.ts`, `WinHistory` panel + REST integration |
-| **6** | Polish: neon glow filters, big win particles, responsive layout, README final |
+| Session              | Focus                                                                                    |
+| -------------------- | ---------------------------------------------------------------------------------------- |
+| **1 (this session)** | Scaffold + game logic layer + stores (typed, tested)                                     |
+| **2**                | `useGameMachine.ts` (FSM, all 8 states), `HistoryService`, `useHistoryStore`             |
+| **3**                | PixiJS `SceneManager`, `LoadingScene`, `GameScene` scaffold, `ReelComponent` + animation |
+| **4**                | Win evaluation visuals (`WinLine`, symbol dim/pulse), Vue UI components                  |
+| **5**                | Free spins flow, Autoplay, `useAudio.ts`, `WinHistory` panel + REST integration          |
+| **6**                | Polish: neon glow filters, big win particles, responsive layout, README final            |
 
 ---
 
