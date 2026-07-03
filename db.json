@@ -1,3 +1,313 @@
 {
-  "history": []
+  "history": [
+    {
+      "timestamp": "2026-06-30T21:12:04.176Z",
+      "bet": 20,
+      "win": 50,
+      "freeSpinsAwarded": 0,
+      "id": "5vGFEcq1LbU"
+    },
+    {
+      "timestamp": "2026-06-30T21:23:02.528Z",
+      "bet": 20,
+      "win": 60,
+      "freeSpinsAwarded": 0,
+      "id": "jSGsCS6bWBY"
+    },
+    {
+      "timestamp": "2026-06-30T21:23:11.954Z",
+      "bet": 20,
+      "win": 380,
+      "freeSpinsAwarded": 0,
+      "id": "GB9zWnagH84"
+    },
+    {
+      "timestamp": "2026-06-30T21:23:19.321Z",
+      "bet": 20,
+      "win": 210,
+      "freeSpinsAwarded": 0,
+      "id": "Ib5rEjj9mi0"
+    },
+    {
+      "timestamp": "2026-06-30T21:23:25.757Z",
+      "bet": 20,
+      "win": 60,
+      "freeSpinsAwarded": 0,
+      "id": "qXBgQ83PREk"
+    },
+    {
+      "timestamp": "2026-06-30T21:23:35.167Z",
+      "bet": 20,
+      "win": 10,
+      "freeSpinsAwarded": 0,
+      "id": "UrHy_9ZmdsQ"
+    },
+    {
+      "timestamp": "2026-06-30T21:23:48.861Z",
+      "bet": 40,
+      "win": 20,
+      "freeSpinsAwarded": 0,
+      "id": "fX33JSGjPQA"
+    },
+    {
+      "timestamp": "2026-06-30T21:23:58.266Z",
+      "bet": 20,
+      "win": 15,
+      "freeSpinsAwarded": 0,
+      "id": "6EkOBX8qojg"
+    },
+    {
+      "timestamp": "2026-06-30T21:25:04.669Z",
+      "bet": 20,
+      "win": 155,
+      "freeSpinsAwarded": 0,
+      "id": "16VL18tYI5U"
+    },
+    {
+      "timestamp": "2026-06-30T21:25:34.266Z",
+      "bet": 20,
+      "win": 10,
+      "freeSpinsAwarded": 0,
+      "id": "vP1DfrOAra0"
+    },
+    {
+      "timestamp": "2026-07-01T04:13:25.124Z",
+      "bet": 20,
+      "win": 125,
+      "freeSpinsAwarded": 0,
+      "id": "wMA3uoEWPRg"
+    },
+    {
+      "timestamp": "2026-07-01T04:13:30.421Z",
+      "bet": 20,
+      "win": 450,
+      "freeSpinsAwarded": 0,
+      "id": "KgO-3cRYfrg"
+    },
+    {
+      "timestamp": "2026-07-01T04:13:35.713Z",
+      "bet": 20,
+      "win": 260,
+      "freeSpinsAwarded": 0,
+      "id": "x735lCMcGqA"
+    },
+    {
+      "timestamp": "2026-07-01T04:13:41.012Z",
+      "bet": 20,
+      "win": 175,
+      "freeSpinsAwarded": 0,
+      "id": "tMO_l0Ee4to"
+    },
+    {
+      "timestamp": "2026-07-01T04:13:46.302Z",
+      "bet": 20,
+      "win": 65,
+      "freeSpinsAwarded": 0,
+      "id": "CQfHi8Q3oNI"
+    },
+    {
+      "timestamp": "2026-07-01T04:13:56.253Z",
+      "bet": 20,
+      "win": 30,
+      "freeSpinsAwarded": 0,
+      "id": "mHe1E1_io5U"
+    },
+    {
+      "timestamp": "2026-07-01T04:14:01.580Z",
+      "bet": 20,
+      "win": 20,
+      "freeSpinsAwarded": 0,
+      "id": "xZXIBOfHYNs"
+    },
+    {
+      "timestamp": "2026-07-01T04:14:06.998Z",
+      "bet": 20,
+      "win": 25,
+      "freeSpinsAwarded": 0,
+      "id": "MGtO64zlak4"
+    },
+    {
+      "timestamp": "2026-07-01T04:24:39.388Z",
+      "bet": 20,
+      "win": 90,
+      "freeSpinsAwarded": 0,
+      "id": "ebPCxpSGzQg"
+    },
+    {
+      "timestamp": "2026-07-01T04:24:44.680Z",
+      "bet": 20,
+      "win": 15,
+      "freeSpinsAwarded": 0,
+      "id": "KtTBFAU6tnA"
+    },
+    {
+      "timestamp": "2026-07-01T04:24:49.971Z",
+      "bet": 20,
+      "win": 10,
+      "freeSpinsAwarded": 0,
+      "id": "6oUrtAFWkiM"
+    },
+    {
+      "timestamp": "2026-07-01T04:24:55.270Z",
+      "bet": 20,
+      "win": 145,
+      "freeSpinsAwarded": 0,
+      "id": "ACF5g4oqhRo"
+    },
+    {
+      "timestamp": "2026-07-01T04:25:00.561Z",
+      "bet": 20,
+      "win": 120,
+      "freeSpinsAwarded": 0,
+      "id": "0rC2f10Q5CI"
+    },
+    {
+      "timestamp": "2026-07-01T04:27:58.369Z",
+      "bet": 20,
+      "win": 70,
+      "freeSpinsAwarded": 0,
+      "id": "fyKeGBckQK0"
+    },
+    {
+      "timestamp": "2026-07-01T04:28:03.673Z",
+      "bet": 20,
+      "win": 30,
+      "freeSpinsAwarded": 0,
+      "id": "G_tz6P_u_xo"
+    },
+    {
+      "timestamp": "2026-07-01T04:28:08.971Z",
+      "bet": 20,
+      "win": 10,
+      "freeSpinsAwarded": 0,
+      "id": "l6SNzsceVl4"
+    },
+    {
+      "timestamp": "2026-07-01T04:28:14.283Z",
+      "bet": 20,
+      "win": 40,
+      "freeSpinsAwarded": 0,
+      "id": "bic1nieV4rI"
+    },
+    {
+      "timestamp": "2026-07-01T04:28:19.588Z",
+      "bet": 20,
+      "win": 145,
+      "freeSpinsAwarded": 0,
+      "id": "lk8yu3lMsp8"
+    },
+    {
+      "timestamp": "2026-07-01T04:41:57.646Z",
+      "bet": 20,
+      "win": 30,
+      "freeSpinsAwarded": 0,
+      "id": "537Nn4Xit8Q"
+    },
+    {
+      "timestamp": "2026-07-01T04:44:17.922Z",
+      "bet": 20,
+      "win": 10,
+      "freeSpinsAwarded": 0,
+      "id": "dIcNVqc8GAw"
+    },
+    {
+      "timestamp": "2026-07-01T04:44:24.800Z",
+      "bet": 20,
+      "win": 175,
+      "freeSpinsAwarded": 0,
+      "id": "vE0Ds-sThNo"
+    },
+    {
+      "timestamp": "2026-07-01T04:45:56.879Z",
+      "bet": 20,
+      "win": 20,
+      "freeSpinsAwarded": 0,
+      "id": "u4fw-OPKCE0"
+    },
+    {
+      "timestamp": "2026-07-01T04:46:02.177Z",
+      "bet": 20,
+      "win": 520,
+      "freeSpinsAwarded": 0,
+      "id": "HhCZX7RZR9U"
+    },
+    {
+      "timestamp": "2026-07-01T04:46:07.475Z",
+      "bet": 20,
+      "win": 25,
+      "freeSpinsAwarded": 0,
+      "id": "gD1FhRmPJMY"
+    },
+    {
+      "timestamp": "2026-07-01T04:48:35.538Z",
+      "bet": 20,
+      "win": 10,
+      "freeSpinsAwarded": 0,
+      "id": "90eOVSRDmrk"
+    },
+    {
+      "timestamp": "2026-07-01T04:48:41.836Z",
+      "bet": 20,
+      "win": 95,
+      "freeSpinsAwarded": 0,
+      "id": "fl3GAZW5j8U"
+    },
+    {
+      "timestamp": "2026-07-01T04:48:53.761Z",
+      "bet": 20,
+      "win": 20,
+      "freeSpinsAwarded": 0,
+      "id": "x8Xykn8RSi8"
+    },
+    {
+      "timestamp": "2026-07-01T05:09:58.543Z",
+      "bet": 20,
+      "win": 30,
+      "freeSpinsAwarded": 0,
+      "id": "qEsIjrz-eZY"
+    },
+    {
+      "timestamp": "2026-07-01T05:10:03.826Z",
+      "bet": 20,
+      "win": 135,
+      "freeSpinsAwarded": 0,
+      "id": "hhXuIKc9Uk8"
+    },
+    {
+      "timestamp": "2026-07-01T05:10:09.122Z",
+      "bet": 20,
+      "win": 85,
+      "freeSpinsAwarded": 0,
+      "id": "AcsTggWtjh4"
+    },
+    {
+      "timestamp": "2026-07-01T05:10:14.422Z",
+      "bet": 20,
+      "win": 30,
+      "freeSpinsAwarded": 0,
+      "id": "Vm47aPZMRWc"
+    },
+    {
+      "timestamp": "2026-07-01T05:10:19.726Z",
+      "bet": 20,
+      "win": 140,
+      "freeSpinsAwarded": 0,
+      "id": "ZHOPyOqlvAQ"
+    },
+    {
+      "timestamp": "2026-07-01T05:11:04.774Z",
+      "bet": 20,
+      "win": 45,
+      "freeSpinsAwarded": 0,
+      "id": "NE512mkhIe0"
+    },
+    {
+      "timestamp": "2026-07-01T05:11:11.916Z",
+      "bet": 20,
+      "win": 610,
+      "freeSpinsAwarded": 0,
+      "id": "CLvqnUEiLmw"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

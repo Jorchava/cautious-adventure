@@ -2,15 +2,18 @@ import type { SpinRecord } from '@/types/game.types'
 import type { HistoryService } from './HistoryService'
 
 export class ClientHistoryService implements HistoryService {
-  constructor(private readonly baseUrl = 'http://localhost:3001') {}
+  constructor(private readonly baseUrl = 'http://localhost:3001') { }
 
   async getHistory(limit = 10): Promise<SpinRecord[]> {
-    const url = `${this.baseUrl}/history?_sort=timestamp&_order=desc&_limit=${limit}`
+    // _limit removed — not supported in json-server v1 (treated as field filter)
+    // Slice client-side instead, which is reliable across all versions
+    const url = `${this.baseUrl}/history?_sort=-timestamp`
     const response = await fetch(url)
     if (!response.ok) {
       throw new Error(`HistoryService.getHistory failed: ${response.statusText}`)
     }
-    return response.json()
+    const all: SpinRecord[] = await response.json()
+    return all.slice(0, limit)
   }
 
   async recordSpin(record: Omit<SpinRecord, 'id'>): Promise<SpinRecord> {

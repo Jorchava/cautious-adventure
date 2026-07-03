@@ -22,6 +22,9 @@ export default [
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'error',
+      'vue/component-tags-order': ['error', {
+        order: ['script', 'template', 'style'],
+      }], // maintain preferred logic-first pattern vue
     },
   },
   ...pluginVue.configs['flat/recommended'],

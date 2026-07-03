@@ -31,7 +31,8 @@ export function useGameMachine(spinService: SpinService = new ClientSpinService(
   }
 
   function evaluate(): void {
-    assertPhase('SPINNING')
+    assertPhase(['SPINNING', 'FREE_SPINNING'])
+    if (store.phase === 'FREE_SPINNING') return
     const result = store.lastResult
     if (!result) {
       store.setPhase('IDLE')

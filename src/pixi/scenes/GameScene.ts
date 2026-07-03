@@ -89,6 +89,8 @@ export class GameScene extends Container implements IScene {
   }
 
   startSpin(result: SpinResult, app: AppWithTicker): void {
+    // bridge between Pinia state and the PixiJS visual layer debug
+    console.log('[GameScene] startSpin called', result)
     this.stoppedCount = 0
 
     this.reels.forEach((reel, index) => {
@@ -104,6 +106,8 @@ export class GameScene extends Container implements IScene {
       }, stopDelay)
 
       reel.once('stopped', () => {
+        app.ticker.remove(tickFn)
+        this.tickerFns = this.tickerFns.filter(f => f !== tickFn)
         this.stoppedCount++
         if (this.stoppedCount === REEL_COUNT) {
           this.emit('allReelsStopped')
@@ -151,7 +155,9 @@ export class GameScene extends Container implements IScene {
   }
 
   override destroy(options?: { children?: boolean }): void {
-    this.tickerFns = []
+    this.tickerFns = [] // empty the array but never calls app.ticker.remove()
+    // so were keeping running even after scene destroyed
+    // removing then each tickFn from the ticker when a reel stops, right inside startSpin
     this.reels = []
     super.destroy(options)
   }

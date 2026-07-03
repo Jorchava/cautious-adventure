@@ -1,16 +1,9 @@
 <template>
   <Teleport to="body">
     <Transition name="paytable-fade">
-      <div
-        v-if="isOpen"
-        class="paytable-overlay"
-        @click.self="close"
-      >
+      <div v-if="isOpen" class="paytable-overlay" @click.self="close">
         <div class="paytable-panel">
-          <button
-            class="close-btn"
-            @click="close"
-          >
+          <button class="close-btn" @click="close">
             ✕
           </button>
           <h2 class="title">
@@ -18,22 +11,11 @@
           </h2>
 
           <div class="symbols-grid">
-            <div
-              v-for="sym in symbolDefs"
-              :key="sym.id"
-              class="symbol-row"
-            >
-              <div
-                class="symbol-swatch"
-                :style="{ background: sym.color }"
-              />
+            <div v-for="sym in symbolDefs" :key="sym.id" class="symbol-row">
+              <div class="symbol-swatch" :style="{ background: sym.color }" />
               <span class="symbol-name">{{ sym.displayName }}</span>
               <div class="payouts">
-                <span
-                  v-for="[count, payout] in sym.payoutEntries"
-                  :key="count"
-                  class="payout-entry"
-                >
+                <span v-for="[count, payout] in sym.payoutEntries" :key="count" class="payout-entry">
                   {{ count }}× = {{ payout }}
                 </span>
               </div>
@@ -56,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { SYMBOL_DEFINITIONS } from '@/game/config/symbols'
 
 const isOpen = ref(false)
@@ -79,6 +61,12 @@ const symbolDefs = computed(() =>
       .sort(([a], [b]) => b - a),
   })),
 )
+
+function onKeyDown(e: KeyboardEvent) {
+  if (e.key === 'Escape' && isOpen.value) close()
+}
+onMounted(() => document.addEventListener('keydown', onKeyDown))
+onUnmounted(() => document.removeEventListener('keydown', onKeyDown))
 
 function open(): void {
   isOpen.value = true
@@ -178,6 +166,7 @@ defineExpose({ open, close })
 .paytable-fade-leave-active {
   transition: opacity 0.25s ease;
 }
+
 .paytable-fade-enter-from,
 .paytable-fade-leave-to {
   opacity: 0;

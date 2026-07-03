@@ -753,7 +753,7 @@ const paytableRef = ref<InstanceType<typeof Paytable> | null>(null);
 </script>
 
 <style lang="scss">
-@import '@/assets/styles/main';
+@use '@/assets/styles/main';
 
 .app {
   position: relative;

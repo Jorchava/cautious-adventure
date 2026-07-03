@@ -5,14 +5,12 @@
     <div class="hud">
       <div class="hud-top">
         <BalanceDisplay />
+        <WinHistory class="hud-history" />
       </div>
       <div class="hud-bottom">
         <BetPanel />
         <SpinButton />
-        <button
-          class="paytable-toggle"
-          @click="paytableRef?.open()"
-        >
+        <button class="paytable-toggle" @click="paytableRef?.open()">
           ℹ
         </button>
       </div>
@@ -29,12 +27,13 @@ import BalanceDisplay from '@/components/BalanceDisplay.vue'
 import BetPanel from '@/components/BetPanel.vue'
 import SpinButton from '@/components/SpinButton.vue'
 import Paytable from '@/components/Paytable.vue'
+import WinHistory from '@/components/WinHistory.vue'
 
 const paytableRef = ref<InstanceType<typeof Paytable> | null>(null)
 </script>
 
 <style lang="scss">
-@import '@/assets/styles/main';
+@use '@/assets/styles/main';
 
 .app {
   position: relative;
@@ -58,7 +57,7 @@ const paytableRef = ref<InstanceType<typeof Paytable> | null>(null)
   padding: 20px 32px;
   pointer-events: none;
 
-  & > * {
+  &>* {
     pointer-events: auto;
   }
 }
@@ -66,6 +65,14 @@ const paytableRef = ref<InstanceType<typeof Paytable> | null>(null)
 .hud-top {
   display: flex;
   justify-content: center;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.hud-history {
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .hud-bottom {
