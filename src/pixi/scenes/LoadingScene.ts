@@ -29,7 +29,7 @@ export class LoadingScene extends Container implements IScene {
     this.addChild(bg)
 
     this.bar = new Graphics()
-    this.setProgress(0)
+    // this.setProgress(0) // moving it to where it exists
     this.bar.x = 200
     this.bar.y = 300
     this.addChild(this.bar)
@@ -41,6 +41,8 @@ export class LoadingScene extends Container implements IScene {
     this.statusLabel.anchor.set(0.5)
     this.statusLabel.position.set(450, 340)
     this.addChild(this.statusLabel)
+
+    this.setProgress(0)
   }
 
   private setProgress(progress: number): void {

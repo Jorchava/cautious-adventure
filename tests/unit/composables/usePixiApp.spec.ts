@@ -4,69 +4,74 @@ import { defineComponent, ref } from 'vue'
 import { usePixiApp } from '@/composables/usePixiApp'
 // pixi.js is already mocked in tests/setup.ts
 
+interface PixiAppTestVm {
+  app: {
+    init: ReturnType<typeof vi.fn>
+    destroy: ReturnType<typeof vi.fn>
+  }
+  isReady: boolean
+}
+
+import { vi } from 'vitest'
+
 function tick(): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, 0))
 }
 
-function mountWithPixiApp() {
-  const canvasRef = ref<HTMLCanvasElement | null>(
-    document.createElement('canvas'),
-  )
-  let exposed: ReturnType<typeof usePixiApp> | undefined
-
-  const TestComponent = defineComponent({
-    setup() {
-      const result = usePixiApp(canvasRef)
-      exposed = result
-      return result
-    },
-    template: '<div></div>',
-  })
-
-  const wrapper = mount(TestComponent, { attachTo: document.body })
-  return { wrapper, exposed: exposed! }
-}
+const PixiAppTestHost = defineComponent({
+  props: {
+    canvasElement: { type: Object as () => HTMLCanvasElement | null, default: null },
+  },
+  setup(props) {
+    const canvasRef = ref<HTMLCanvasElement | null>(props.canvasElement)
+    return usePixiApp(canvasRef)
+  },
+  template: '<div></div>',
+})
 
 describe('usePixiApp', () => {
   it('calls app.init() on mount with a canvas element', async () => {
-    const { exposed } = mountWithPixiApp()
-    // Wait for onMounted + async init
+    const wrapper = mount(PixiAppTestHost, {
+      props: { canvasElement: document.createElement('canvas') },
+      attachTo: document.body,
+    })
     await tick()
-    expect(exposed.app.init).toHaveBeenCalledOnce()
+    const vm = wrapper.vm as unknown as PixiAppTestVm
+    expect(vm.app.init).toHaveBeenCalledOnce()
   })
 
   it('isReady becomes true after app.init() resolves', async () => {
-    const { exposed } = mountWithPixiApp()
+    const wrapper = mount(PixiAppTestHost, {
+      props: { canvasElement: document.createElement('canvas') },
+      attachTo: document.body,
+    })
     await tick()
-    expect(exposed.isReady.value).toBe(true)
+    const vm = wrapper.vm as unknown as PixiAppTestVm
+    expect(vm.isReady).toBe(true)
   })
 
   it('calls app.destroy() with full cleanup options on unmount', async () => {
-    const { wrapper, exposed } = mountWithPixiApp()
+    const wrapper = mount(PixiAppTestHost, {
+      props: { canvasElement: document.createElement('canvas') },
+      attachTo: document.body,
+    })
     await tick()
+    const vm = wrapper.vm as unknown as PixiAppTestVm
     wrapper.unmount()
-    expect(exposed.app.destroy).toHaveBeenCalledWith(true, {
+    expect(vm.app.destroy).toHaveBeenCalledWith(true, {
       children: true,
       texture: true,
     })
   })
 
   it('does not call app.init() if canvasRef is null', async () => {
-    let exposed: ReturnType<typeof usePixiApp> | undefined
-    const canvasRef = ref<HTMLCanvasElement | null>(null)
-
-    const TestComponent = defineComponent({
-      setup() {
-        const result = usePixiApp(canvasRef)
-        exposed = result
-        return result
-      },
-      template: '<div></div>',
+    const wrapper = mount(PixiAppTestHost, {
+      props: { canvasElement: null },
+      attachTo: document.body,
     })
-
-    mount(TestComponent, { attachTo: document.body })
     await tick()
-    expect(exposed!.app.init).not.toHaveBeenCalled()
-    expect(exposed!.isReady.value).toBe(false)
+    const vm = wrapper.vm as unknown as PixiAppTestVm
+    expect(vm.app.init).not.toHaveBeenCalled()
+    expect(vm.isReady).toBe(false)
   })
 })

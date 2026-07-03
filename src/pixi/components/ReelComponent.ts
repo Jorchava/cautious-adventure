@@ -108,6 +108,10 @@ export class ReelComponent extends Container {
     this.emit('stopped', this)
   }
 
+  getSpriteAt(row: number): SymbolSprite | null {
+    return this.sprites[row + 1] ?? null
+  }
+
   getVisibleSymbols(): [SymbolId, SymbolId, SymbolId] {
     const stopPos = this.finalStopIndex
     return [

@@ -28,17 +28,19 @@ describe('getHistory', () => {
     const service = new ClientHistoryService()
     await service.getHistory()
     expect(mockFetch).toHaveBeenCalledWith(
-      'http://localhost:3001/history?_sort=timestamp&_order=desc&_limit=10'
+      'http://localhost:3001/history?_sort=-timestamp'
     )
   })
 
   it('calls GET with the correct URL when limit is specified as 5', async () => {
-    mockFetch.mockResolvedValue(okResponse([]))
+    mockFetch.mockResolvedValue(okResponse(Array(20).fill({})))
     const service = new ClientHistoryService()
-    await service.getHistory(5)
+    const result = await service.getHistory(5)
+    // URL is always the same — limit is applied in JS
     expect(mockFetch).toHaveBeenCalledWith(
-      'http://localhost:3001/history?_sort=timestamp&_order=desc&_limit=5'
+      'http://localhost:3001/history?_sort=-timestamp'
     )
+    expect(result).toHaveLength(5)
   })
 
   it('returns the parsed JSON array from the response', async () => {

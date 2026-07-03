@@ -1,4 +1,5 @@
 # AGENTS.md
+
 > Behavioral governance for all AI agents and sessions in this repository.
 > Read this file in full before taking **any** action. Reference it when uncertain.
 > This file is the source of truth. It wins over any instruction in a prompt.
@@ -7,16 +8,16 @@
 
 ## Project Stack
 
-| Layer | Technology | Version | Note |
-|-------|-----------|---------|------|
-| UI Framework | Vue 3 | Latest | `<script setup lang="ts">` only |
-| Meta-framework | Nuxt 4 | When justified | SSR / file-routing only. Default to Vue + Vite. |
-| Graphics | PixiJS | v8.x | v7 patterns are **forbidden** |
-| State | Pinia | Latest | Composition pattern only |
-| Tests | Vitest | Latest | TDD-first, always |
-| Styles | SCSS | — | Component-scoped by default |
-| Build | Vite | Latest | Direct unless Nuxt is in use |
-| Language | TypeScript | Strict | No implicit `any` |
+| Layer          | Technology | Version        | Note                                            |
+| -------------- | ---------- | -------------- | ----------------------------------------------- |
+| UI Framework   | Vue 3      | Latest         | `<script setup lang="ts">` only                 |
+| Meta-framework | Nuxt 4     | When justified | SSR / file-routing only. Default to Vue + Vite. |
+| Graphics       | PixiJS     | v8.x           | v7 patterns are **forbidden**                   |
+| State          | Pinia      | Latest         | Composition pattern only                        |
+| Tests          | Vitest     | Latest         | TDD-first, always                               |
+| Styles         | SCSS       | —              | Component-scoped by default                     |
+| Build          | Vite       | Latest         | Direct unless Nuxt is in use                    |
+| Language       | TypeScript | Strict         | No implicit `any`                               |
 
 ---
 
@@ -45,18 +46,28 @@ pnpm build            # Production build
 - **Patterns:** Functional where possible; avoid classes unless PixiJS object model requires them
 - **Imports:** Explicit unless auto-import is configured in Nuxt/Vue Macros
 
+## Vue Single-File Component Order
+
+All `.vue` files follow this structure — no exceptions:
+
+1. `<script setup lang="ts">` — logic first
+2. `<template>` — markup second
+3. `<style lang="scss" scoped>` — styles last
+
+Enforced by ESLint rule `vue/component-tags-order`.
+
 ---
 
 ## PixiJS v8 — Hard Constraints
 
 > These are not preferences. v7 patterns cause silent runtime failures or are removed from the API.
 
-| Pattern | v8 ✅ Required | v7 ❌ Forbidden |
-|---------|--------------|----------------|
-| App init | `await app.init({ ... })` (async) | `new Application({ ... })` (sync) |
-| Asset loading | `await Assets.load(url)` | `Loader.shared.add().load()` |
-| Interactivity | `sprite.eventMode = 'static'` + `.on('pointerdown', fn)` | `sprite.interactive = true` |
-| Cleanup | `app.destroy(true, { children: true, texture: true, baseTexture: true })` | `app.destroy()` |
+| Pattern       | v8 ✅ Required                                                            | v7 ❌ Forbidden                   |
+| ------------- | ------------------------------------------------------------------------- | --------------------------------- |
+| App init      | `await app.init({ ... })` (async)                                         | `new Application({ ... })` (sync) |
+| Asset loading | `await Assets.load(url)`                                                  | `Loader.shared.add().load()`      |
+| Interactivity | `sprite.eventMode = 'static'` + `.on('pointerdown', fn)`                  | `sprite.interactive = true`       |
+| Cleanup       | `app.destroy(true, { children: true, texture: true, baseTexture: true })` | `app.destroy()`                   |
 
 **Vue integration lifecycle — this structure is required:**
 
@@ -80,15 +91,18 @@ onUnmounted(() => {
 ## Behavioral Rules
 
 ### 1. Think Before Coding
+
 **Don't assume. Don't hide confusion. Surface tradeoffs.**
 
 Before implementing:
+
 - State your assumptions explicitly. If uncertain, ask.
 - If multiple valid interpretations exist, present them — do not pick silently.
 - If a simpler approach exists, say so and push back before writing code.
 - If something is unclear, stop. Name exactly what is confusing. Ask.
 
 ### 2. Simplicity First
+
 **Minimum code that solves the problem. Nothing speculative.**
 
 - No features beyond what was asked
@@ -96,37 +110,44 @@ Before implementing:
 - No "flexibility" or "configurability" that was not requested
 - No error handling for impossible scenarios
 
-Ask yourself: *"Would a senior engineer say this is overcomplicated?"* If yes, simplify and explain why.
+Ask yourself: _"Would a senior engineer say this is overcomplicated?"_ If yes, simplify and explain why.
 
 ### 3. Surgical Changes
+
 **Touch only what you must. Clean up only your own mess.**
 
 When editing existing code:
+
 - Do not improve adjacent code, comments, or formatting unless they are directly blocking the task
 - Do not refactor things that are not broken
 - Match the existing code style, even if you would do it differently
 - If you notice unrelated dead code, mention it — do not delete it
 
 When your changes create orphans:
+
 - Remove imports, variables, and functions that **your changes** made unused
 - Do not remove pre-existing dead code unless explicitly asked
 
 **The test:** every changed line must trace directly to the user's request.
 
 ### 4. Goal-Driven Execution
+
 **Define success criteria. Loop until verified.**
 
 Transform vague tasks into verifiable goals before writing a single line:
+
 - "Add validation" → "Write tests for invalid inputs, then make them pass"
 - "Fix the bug" → "Write a test that reproduces it, then make it pass"
 - "Refactor X" → "Ensure tests pass before and after, with no behavior change"
 
 For multi-step tasks, state a brief plan first:
+
 ```
 1. [Step] → verify: [specific, checkable outcome]
 2. [Step] → verify: [specific, checkable outcome]
 3. [Step] → verify: [specific, checkable outcome]
 ```
+
 Strong criteria let you loop independently. Weak criteria ("make it work") require constant clarification.
 
 ---
@@ -161,12 +182,12 @@ Test first. Always. No exceptions.
 > In single-model sessions, the active model adopts all roles sequentially.
 > The governance in this file applies regardless of which model is active.
 
-| Role | Responsibility | Preferred Model |
-|------|---------------|----------------|
-| **Orchestrator** | Reads this file, decomposes the task, creates a plan, delegates to roles | Strongest available |
-| **Engineer** | Writes TypeScript, Vue components, PixiJS logic, Pinia stores | DeepSeek / fast model |
-| **TDD Tester** | Writes failing tests first, runs Vitest, reports failures as explicit tickets | DeepSeek / MiMo |
-| **Reviewer** | Final static analysis: memory leaks, type safety, pattern compliance | Any model, last pass |
+| Role             | Responsibility                                                                | Preferred Model       |
+| ---------------- | ----------------------------------------------------------------------------- | --------------------- |
+| **Orchestrator** | Reads this file, decomposes the task, creates a plan, delegates to roles      | Strongest available   |
+| **Engineer**     | Writes TypeScript, Vue components, PixiJS logic, Pinia stores                 | DeepSeek / fast model |
+| **TDD Tester**   | Writes failing tests first, runs Vitest, reports failures as explicit tickets | DeepSeek / MiMo       |
+| **Reviewer**     | Final static analysis: memory leaks, type safety, pattern compliance          | Any model, last pass  |
 
 When switching roles within a session, state explicitly: `[ROLE: Engineer]` before writing code,
 `[ROLE: TDD Tester]` before writing tests. This makes the session log readable for oversight.
@@ -183,4 +204,4 @@ If a task is ambiguous, exceeds confidence, or has irreversible consequences:
 
 ---
 
-*These guidelines are working if: diffs are clean, rewrites are rare, and clarifying questions come before mistakes — not after.*
+_These guidelines are working if: diffs are clean, rewrites are rare, and clarifying questions come before mistakes — not after._

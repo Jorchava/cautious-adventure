@@ -134,7 +134,7 @@ Full transition table: `docs/architecture.md` section 6.2
 
 ---
 
-## Development State
+## Development State (updated Session 5)
 
 ### Completed — Sessions 1 & 2
 - [x] Governance files: AGENTS.md, SKILLS.md, PROJECT_CONTEXT.md
@@ -163,13 +163,43 @@ Full transition table: `docs/architecture.md` section 6.2
 - [x] src/assets/styles/main.scss — global reset styles
 - [x] 136 tests passing (102 baseline + 34 Session 3)
 - [x] pnpm tsc --noEmit — zero errors
-- [x] pnpm lint — zero errors (3 warnings: test component pattern)
+- [x] pnpm lint — zero errors (2 warnings: vue/one-component-per-file)
 
-### Next — Session 4 (Win Lines + UI Layer)
-- [ ] Win line rendering (Graphics-drawn payline highlights)
-- [ ] Symbol win/dim animations
-- [ ] BalanceDisplay.vue, BetPanel.vue, Paytable.vue
-- [ ] Wire completePaying() after win animation
+### Completed — Session 4 (Win Lines + Core UI)
+- [x] src/pixi/components/WinLine.ts — Graphics-drawn payline highlights
+- [x] GameScene win animation methods (showWin, clearWin, showWinAnimation)
+- [x] ReelComponent.getSpriteAt() — sprite access by row index
+- [x] GameCanvas.vue PAYING phase handler — awaits showWinAnimation, calls completePaying()
+- [x] BalanceDisplay.vue — live credits + win amount display (TDD)
+- [x] BetPanel.vue — coin value selector with validation (TDD)
+- [x] Paytable.vue — full-screen overlay with symbol payouts
+- [x] App.vue — wired HUD with BalanceDisplay, BetPanel, Paytable toggle
+- [x] 152 tests passing (136 baseline + 16 Session 4)
+- [x] pnpm tsc — zero errors
+- [x] pnpm lint — zero errors (2 pre-existing warnings: vue/one-component-per-file)
+
+### Completed — Session 5 (Free Spins + Autoplay + WinHistory)
+- [x] Fix 2 pre-existing lint warnings (vue/one-component-per-file)
+- [x] src/components/FreeSpinsIntro.vue — free spins intro overlay (TDD, 4 tests)
+- [x] src/components/FreeSpinsComplete.vue — free spins complete overlay (TDD, 4 tests)
+- [x] Free spins flow wired in GameCanvas.vue phase watcher + allReelsStopped handler
+- [x] Machine evaluate() updated to handle FREE_SPINNING state
+- [x] History recorded for paid spins (after PAYING) and free spins (on collect)
+- [x] src/composables/useAutoplay.ts — autoplay composable (TDD, 8 tests)
+- [x] SpinButton.vue updated with autoplay controls (5/10/25) and STOP button
+- [x] src/components/WinHistory.vue — REST-backed spin history (TDD, 9 tests)
+- [x] WinHistory added to App.vue HUD (top-right sidebar)
+- [x] 177 tests passing (152 baseline + 25 Session 5)
+- [x] pnpm tsc — zero errors
+- [x] pnpm lint — zero errors, zero warnings
+
+### In Progress — Session 5 (Free Spins + Polish)
+- [x] Fix 2 pre-existing lint warnings (vue/one-component-per-file)
+- [x] Free spins intro screen + flow
+- [x] Autoplay (5 / 10 / 25 spins with stop conditions)
+- [ ] useAudio.ts wired via @pixi/sound
+- [x] WinHistory.vue + json-server REST integration
+- [ ] Neon glow filter on winning symbols
 
 ---
 
