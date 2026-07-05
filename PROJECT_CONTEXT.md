@@ -193,19 +193,38 @@ Full transition table: `docs/architecture.md` section 6.2
 - [x] pnpm tsc — zero errors
 - [x] pnpm lint — zero errors, zero warnings
 
-### In Progress — Session 5 (Free Spins + Polish)
-- [x] Fix 2 pre-existing lint warnings (vue/one-component-per-file)
-- [x] Free spins intro screen + flow
-- [x] Autoplay (5 / 10 / 25 spins with stop conditions)
-- [ ] useAudio.ts wired via @pixi/sound
-- [x] WinHistory.vue + json-server REST integration
-- [ ] Neon glow filter on winning symbols
+### Completed — Session 6 (Polish, Audio, Performance & README)
+- [x] Remove debug console.log lines from GameScene.ts and GameCanvas.vue
+- [x] Vue component order enforced (vue/block-order rule)
+- [x] History persistence confirmed — default service via direct instantiation
+- [x] ESC key closes Paytable overlay
+- [x] Neon glow filter on winning symbols (pulse/stopPulse)
+- [x] WinParticles burst for big wins (> 20× bet)
+- [x] useAudio.ts implementation with @pixi/sound
+- [x] Audio wired in GameCanvas.vue phase watcher
+- [x] Mute toggle button in HUD
+- [x] Responsive canvas scaling (CSS max-width/max-height)
+- [x] Performance audit — heap snapshot before/after 100 spins
+- [x] README.md — portfolio-quality
+- [x] All pre-flight fixes verified
 
 ---
 
-## Known Issues / Tech Debt
+## Known Issues / Design Decisions
 
-[NONE — project has not started yet]
+- Vue reactivity race (FIXED): watcher fired between setPhase('SPINNING') and
+  setResult() in machine.spin(). Fixed by watching [phase, lastResult] tuple
+  with spinStarted flag to prevent double-trigger. Tests couldn't catch this
+  because vi.mock('pixi.js') made the async timing invisible to Vitest.
+- freeSpinsAccumulated: local variable in GameCanvas.vue; resets on remount.
+  Production: move to store.
+- Audio: implemented but requires .ogg files in src/assets/audio/.
+  See docs/sound-credits.md for recommended freesound.org sources.
+- Sprites: colored placeholder squares. Kenney Casino Pack assets are
+  drop-in replacements — update SYMBOL_TEXTURE_MAP in SymbolSprite.ts.
+- RTP simulation: 1 todo test (run pnpm coverage to see scope).
+- History service: default ClientHistoryService uses direct instantiation;
+  setService() exists for test injection only.
 
 ---
 

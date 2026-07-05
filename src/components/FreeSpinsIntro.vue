@@ -1,3 +1,16 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useGameStore } from '@/stores/useGameStore'
+
+defineEmits<{
+  continue: []
+}>()
+
+const gameStore = useGameStore()
+
+const visible = computed(() => gameStore.phase === 'FREE_SPINS_INTRO')
+</script>
+
 <template>
   <Teleport to="body">
     <div
@@ -21,19 +34,6 @@
     </div>
   </Teleport>
 </template>
-
-<script setup lang="ts">
-import { computed } from 'vue'
-import { useGameStore } from '@/stores/useGameStore'
-
-defineEmits<{
-  continue: []
-}>()
-
-const gameStore = useGameStore()
-
-const visible = computed(() => gameStore.phase === 'FREE_SPINS_INTRO')
-</script>
 
 <style lang="scss" scoped>
 .free-spins-intro {

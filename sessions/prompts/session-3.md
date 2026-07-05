@@ -859,7 +859,7 @@ Create `src/components/GameCanvas.vue`:
 
 ```vue
 <template>
-  <div ref="containerRef" class="game-canvas-wrapper">
+  <div class="game-canvas-wrapper">
     <canvas ref="canvasRef" />
   </div>
 </template>

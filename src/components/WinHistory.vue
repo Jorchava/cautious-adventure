@@ -1,3 +1,14 @@
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import { useHistoryStore } from '@/stores/useHistoryStore'
+
+const historyStore = useHistoryStore()
+
+onMounted(async () => {
+  await historyStore.fetchHistory()
+})
+</script>
+
 <template>
   <div class="win-history">
     <h3 class="history-title">
@@ -43,17 +54,6 @@
     </p>
   </div>
 </template>
-
-<script setup lang="ts">
-import { onMounted } from 'vue'
-import { useHistoryStore } from '@/stores/useHistoryStore'
-
-const historyStore = useHistoryStore()
-
-onMounted(async () => {
-  await historyStore.fetchHistory()
-})
-</script>
 
 <style lang="scss" scoped>
 .win-history {

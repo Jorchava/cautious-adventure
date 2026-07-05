@@ -1,3 +1,17 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import GameCanvas from '@/components/GameCanvas.vue'
+import BalanceDisplay from '@/components/BalanceDisplay.vue'
+import BetPanel from '@/components/BetPanel.vue'
+import SpinButton from '@/components/SpinButton.vue'
+import Paytable from '@/components/Paytable.vue'
+import WinHistory from '@/components/WinHistory.vue'
+import { useAudio } from '@/composables/useAudio'
+
+const paytableRef = ref<InstanceType<typeof Paytable> | null>(null)
+const audio = useAudio()
+</script>
+
 <template>
   <div class="app">
     <GameCanvas class="canvas-layer" />
@@ -10,7 +24,16 @@
       <div class="hud-bottom">
         <BetPanel />
         <SpinButton />
-        <button class="paytable-toggle" @click="paytableRef?.open()">
+        <button
+          class="mute-btn"
+          @click="audio.setMuted(!audio.isMuted.value)"
+        >
+          {{ audio.isMuted.value ? '🔇' : '🔊' }}
+        </button>
+        <button
+          class="paytable-toggle"
+          @click="paytableRef?.open()"
+        >
           ℹ
         </button>
       </div>
@@ -19,18 +42,6 @@
     <Paytable ref="paytableRef" />
   </div>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue'
-import GameCanvas from '@/components/GameCanvas.vue'
-import BalanceDisplay from '@/components/BalanceDisplay.vue'
-import BetPanel from '@/components/BetPanel.vue'
-import SpinButton from '@/components/SpinButton.vue'
-import Paytable from '@/components/Paytable.vue'
-import WinHistory from '@/components/WinHistory.vue'
-
-const paytableRef = ref<InstanceType<typeof Paytable> | null>(null)
-</script>
 
 <style lang="scss">
 @use '@/assets/styles/main';
@@ -82,6 +93,7 @@ const paytableRef = ref<InstanceType<typeof Paytable> | null>(null)
   gap: 24px;
 }
 
+.mute-btn,
 .paytable-toggle {
   width: 36px;
   height: 36px;

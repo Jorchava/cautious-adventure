@@ -1,5 +1,4 @@
-import { Container, Graphics, Text } from 'pixi.js'
-import { Assets } from 'pixi.js'
+import { Container, Graphics, Text, Assets } from 'pixi.js'
 import type { IScene } from '@/pixi/IScene'
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from '@/pixi/constants'
 
@@ -29,9 +28,8 @@ export class LoadingScene extends Container implements IScene {
     this.addChild(bg)
 
     this.bar = new Graphics()
-    // this.setProgress(0) // moving it to where it exists
-    this.bar.x = 200
-    this.bar.y = 300
+    this.bar.x = (CANVAS_WIDTH - 500) / 2
+    this.bar.y = CANVAS_HEIGHT / 2 - 20
     this.addChild(this.bar)
 
     this.statusLabel = new Text({
@@ -39,10 +37,10 @@ export class LoadingScene extends Container implements IScene {
       style: { fill: 0x00ffff, fontSize: 20 },
     })
     this.statusLabel.anchor.set(0.5)
-    this.statusLabel.position.set(450, 340)
+    this.statusLabel.position.set(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 20)
     this.addChild(this.statusLabel)
 
-    this.setProgress(0)
+    this.setProgress(0) // called last — requires both bar and statusLabel to exist
   }
 
   private setProgress(progress: number): void {
