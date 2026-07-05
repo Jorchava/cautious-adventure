@@ -1,29 +1,3 @@
-<template>
-  <div class="bet-panel">
-    <button
-      class="bet-btn"
-      :disabled="!canDecrease"
-      @click="decrease"
-    >
-      −
-    </button>
-
-    <div class="bet-values">
-      <span class="coin-label">COIN</span>
-      <span class="coin-value">{{ gameStore.bet.coinsPerLine }}</span>
-      <span class="total-label">BET {{ gameStore.bet.totalBet }}</span>
-    </div>
-
-    <button
-      class="bet-btn"
-      :disabled="!canIncrease"
-      @click="increase"
-    >
-      +
-    </button>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useGameStore } from '@/stores/useGameStore'
@@ -55,6 +29,32 @@ function increase(): void {
   gameStore.setBetCoin(newCoin)
 }
 </script>
+
+<template>
+  <div class="bet-panel">
+    <button
+      class="bet-btn"
+      :disabled="!canDecrease"
+      @click="decrease"
+    >
+      −
+    </button>
+
+    <div class="bet-values">
+      <span class="coin-label">COIN</span>
+      <span class="coin-value">{{ gameStore.bet.coinsPerLine }}</span>
+      <span class="total-label">BET {{ gameStore.bet.totalBet }}</span>
+    </div>
+
+    <button
+      class="bet-btn"
+      :disabled="!canIncrease"
+      @click="increase"
+    >
+      +
+    </button>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 .bet-panel {

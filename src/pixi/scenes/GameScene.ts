@@ -1,7 +1,8 @@
-import { Container, Graphics, Ticker } from 'pixi.js'
+import { Container, Graphics, Ticker, Application } from 'pixi.js'
 import type { IScene } from '@/pixi/IScene'
 import { ReelComponent } from '@/pixi/components/ReelComponent'
 import { WinLine } from '@/pixi/components/WinLine'
+import { WinParticles } from '@/pixi/components/WinParticles'
 import {
   REEL_WIDTH,
   REEL_GAP,
@@ -19,20 +20,16 @@ import type { SpinResult } from '@/types/game.types'
 
 const WIN_ANIMATION_DURATION_MS = 2000
 const DIM_ALPHA = 0.35
-
-interface AppWithTicker {
-  ticker: {
-    add: (fn: (t: Ticker) => void) => void
-    remove: (fn: (t: Ticker) => void) => void
-  }
-}
+const BIG_WIN_MULTIPLIER = 20
 
 export class GameScene extends Container implements IScene {
   private reels: ReelComponent[] = []
   private reelContainer!: Container
+  private app!: Application
   private stoppedCount = 0
   private tickerFns: ((t: Ticker) => void)[] = []
   private winLine!: WinLine
+  private winParticles!: WinParticles
 
   async init(): Promise<void> {
     this.buildBackground()
@@ -41,6 +38,8 @@ export class GameScene extends Container implements IScene {
 
     this.winLine = new WinLine()
     this.addChild(this.winLine)
+    this.winParticles = new WinParticles()
+    this.addChild(this.winParticles)
   }
 
   private buildBackground(): void {
@@ -88,9 +87,8 @@ export class GameScene extends Container implements IScene {
     this.addChild(frame)
   }
 
-  startSpin(result: SpinResult, app: AppWithTicker): void {
-    // bridge between Pinia state and the PixiJS visual layer debug
-    console.log('[GameScene] startSpin called', result)
+  startSpin(result: SpinResult, app: Application): void {
+    this.app = app
     this.stoppedCount = 0
 
     this.reels.forEach((reel, index) => {
@@ -116,7 +114,7 @@ export class GameScene extends Container implements IScene {
     })
   }
 
-  showWin(result: SpinResult): void {
+  showWin(result: SpinResult, app: Application, betTotal: number): void {
     result.paylines.forEach((pl) => this.winLine.drawPayline(pl))
 
     const winKeys = new Set(
@@ -130,34 +128,49 @@ export class GameScene extends Container implements IScene {
         const sprite = reel.getSpriteAt(row)
         if (sprite) {
           sprite.alpha = winKeys.has(`${reelIndex},${row}`) ? 1.0 : DIM_ALPHA
+          if (winKeys.has(`${reelIndex},${row}`)) {
+            sprite.pulse(app)
+          } else {
+            sprite.stopPulse(app)
+          }
+        }
+      }
+    })
+
+    const isBigWin = result.totalWin > betTotal * BIG_WIN_MULTIPLIER
+    if (isBigWin) {
+      this.winParticles.burst(app, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2)
+    }
+  }
+
+  clearWin(app: Application): void {
+    this.winLine.clearAll()
+    this.winParticles.cleanup(app)
+
+    this.reels.forEach((reel) => {
+      for (let row = 0; row < VISIBLE_ROWS; row++) {
+        const sprite = reel.getSpriteAt(row)
+        if (sprite) {
+          sprite.alpha = 1.0
+          sprite.stopPulse(app)
         }
       }
     })
   }
 
-  clearWin(): void {
-    this.winLine.clearAll()
-
-    this.reels.forEach((reel) => {
-      for (let row = 0; row < VISIBLE_ROWS; row++) {
-        const sprite = reel.getSpriteAt(row)
-        if (sprite) sprite.alpha = 1.0
-      }
-    })
-  }
-
-  async showWinAnimation(result: SpinResult): Promise<void> {
-    this.showWin(result)
-    // Note: in production, store this timeout ref and cancel it in onUnmounted
-    // to prevent completePaying() firing after component teardown
+  async showWinAnimation(result: SpinResult, app: Application, betTotal: number): Promise<void> {
+    this.app = app
+    this.showWin(result, app, betTotal)
     await new Promise<void>((resolve) => setTimeout(resolve, WIN_ANIMATION_DURATION_MS))
-    this.clearWin()
+    this.clearWin(app)
   }
 
   override destroy(options?: { children?: boolean }): void {
-    this.tickerFns = [] // empty the array but never calls app.ticker.remove()
-    // so were keeping running even after scene destroyed
-    // removing then each tickFn from the ticker when a reel stops, right inside startSpin
+    if (this.app) {
+      this.winParticles?.cleanup(this.app)
+      this.tickerFns.forEach((fn) => this.app.ticker.remove(fn))
+      this.tickerFns = []
+    }
     this.reels = []
     super.destroy(options)
   }

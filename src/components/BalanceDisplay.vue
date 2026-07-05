@@ -1,3 +1,14 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useGameStore } from '@/stores/useGameStore'
+
+const gameStore = useGameStore()
+
+const showWin = computed(
+  () => gameStore.lastResult !== null && gameStore.lastResult.totalWin > 0,
+)
+</script>
+
 <template>
   <div class="balance-display">
     <div class="balance-item">
@@ -17,17 +28,6 @@
     </Transition>
   </div>
 </template>
-
-<script setup lang="ts">
-import { computed } from 'vue'
-import { useGameStore } from '@/stores/useGameStore'
-
-const gameStore = useGameStore()
-
-const showWin = computed(
-  () => gameStore.lastResult !== null && gameStore.lastResult.totalWin > 0,
-)
-</script>
 
 <style lang="scss" scoped>
 .balance-display {

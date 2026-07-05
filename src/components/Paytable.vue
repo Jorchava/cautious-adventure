@@ -1,42 +1,3 @@
-<template>
-  <Teleport to="body">
-    <Transition name="paytable-fade">
-      <div v-if="isOpen" class="paytable-overlay" @click.self="close">
-        <div class="paytable-panel">
-          <button class="close-btn" @click="close">
-            ✕
-          </button>
-          <h2 class="title">
-            PAYTABLE
-          </h2>
-
-          <div class="symbols-grid">
-            <div v-for="sym in symbolDefs" :key="sym.id" class="symbol-row">
-              <div class="symbol-swatch" :style="{ background: sym.color }" />
-              <span class="symbol-name">{{ sym.displayName }}</span>
-              <div class="payouts">
-                <span v-for="[count, payout] in sym.payoutEntries" :key="count" class="payout-entry">
-                  {{ count }}× = {{ payout }}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div class="scatter-note">
-            <strong>SCATTER (Neon Star):</strong>
-            3 = 10× bet + 10 free spins &nbsp;|&nbsp; 4 = 20× bet + 15 free
-            spins &nbsp;|&nbsp; 5 = 50× bet + 20 free spins
-          </div>
-
-          <div class="lines-note">
-            20 fixed paylines &middot; Wins pay left to right
-          </div>
-        </div>
-      </div>
-    </Transition>
-  </Teleport>
-</template>
-
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { SYMBOL_DEFINITIONS } from '@/game/config/symbols'
@@ -77,6 +38,63 @@ function close(): void {
 
 defineExpose({ open, close })
 </script>
+
+<template>
+  <Teleport to="body">
+    <Transition name="paytable-fade">
+      <div
+        v-if="isOpen"
+        class="paytable-overlay"
+        @click.self="close"
+      >
+        <div class="paytable-panel">
+          <button
+            class="close-btn"
+            @click="close"
+          >
+            ✕
+          </button>
+          <h2 class="title">
+            PAYTABLE
+          </h2>
+
+          <div class="symbols-grid">
+            <div
+              v-for="sym in symbolDefs"
+              :key="sym.id"
+              class="symbol-row"
+            >
+              <div
+                class="symbol-swatch"
+                :style="{ background: sym.color }"
+              />
+              <span class="symbol-name">{{ sym.displayName }}</span>
+              <div class="payouts">
+                <span
+                  v-for="[count, payout] in sym.payoutEntries"
+                  :key="count"
+                  class="payout-entry"
+                >
+                  {{ count }}× = {{ payout }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="scatter-note">
+            <strong>SCATTER (Neon Star):</strong>
+            3 = 10× bet + 10 free spins &nbsp;|&nbsp; 4 = 20× bet + 15 free
+            spins &nbsp;|&nbsp; 5 = 50× bet + 20 free spins
+          </div>
+
+          <div class="lines-note">
+            20 fixed paylines &middot; Wins pay left to right
+          </div>
+        </div>
+      </div>
+    </Transition>
+  </Teleport>
+</template>
 
 <style lang="scss" scoped>
 .paytable-overlay {

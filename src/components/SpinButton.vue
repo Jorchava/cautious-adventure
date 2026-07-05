@@ -1,31 +1,3 @@
-<template>
-  <div class="spin-control">
-    <button
-      class="spin-btn"
-      :class="{ 'is-stop': autoplay.isActive.value }"
-      :disabled="!canAct"
-      @click="handleMainClick"
-    >
-      {{ buttonLabel }}
-    </button>
-
-    <div
-      v-if="!autoplay.isActive.value"
-      class="autoplay-options"
-    >
-      <button
-        v-for="count in AUTOPLAY_OPTIONS"
-        :key="count"
-        class="auto-btn"
-        :disabled="!gameStore.canSpin"
-        @click="autoplay.start(count)"
-      >
-        {{ count }}
-      </button>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useGameStore } from '@/stores/useGameStore'
@@ -58,6 +30,34 @@ async function handleMainClick(): Promise<void> {
   }
 }
 </script>
+
+<template>
+  <div class="spin-control">
+    <button
+      class="spin-btn"
+      :class="{ 'is-stop': autoplay.isActive.value }"
+      :disabled="!canAct"
+      @click="handleMainClick"
+    >
+      {{ buttonLabel }}
+    </button>
+
+    <div
+      v-if="!autoplay.isActive.value"
+      class="autoplay-options"
+    >
+      <button
+        v-for="count in AUTOPLAY_OPTIONS"
+        :key="count"
+        class="auto-btn"
+        :disabled="!gameStore.canSpin"
+        @click="autoplay.start(count)"
+      >
+        {{ count }}
+      </button>
+    </div>
+  </div>
+</template>
 
 <style lang="scss" scoped>
 .spin-control {

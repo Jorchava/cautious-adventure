@@ -1,3 +1,20 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useGameStore } from '@/stores/useGameStore'
+
+defineEmits<{
+  continue: []
+}>()
+
+const gameStore = useGameStore()
+
+const visible = computed(() => gameStore.phase === 'FREE_SPINS_COMPLETE')
+
+const totalWin = computed(() => {
+  return gameStore.lastResult?.totalWin ?? 0
+})
+</script>
+
 <template>
   <Teleport to="body">
     <div
@@ -21,23 +38,6 @@
     </div>
   </Teleport>
 </template>
-
-<script setup lang="ts">
-import { computed } from 'vue'
-import { useGameStore } from '@/stores/useGameStore'
-
-defineEmits<{
-  continue: []
-}>()
-
-const gameStore = useGameStore()
-
-const visible = computed(() => gameStore.phase === 'FREE_SPINS_COMPLETE')
-
-const totalWin = computed(() => {
-  return gameStore.lastResult?.totalWin ?? 0
-})
-</script>
 
 <style lang="scss" scoped>
 .free-spins-complete {

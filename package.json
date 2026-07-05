@@ -12,7 +12,8 @@
     "coverage": "vitest run --coverage",
     "tsc": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.ts,.tsx",
-    "api": "json-server --watch db.json --port 3001"
+    "api": "json-server --watch db.json --port 3001",
+    "api:clean": "node -e \"require('fs').writeFileSync('db.json', JSON.stringify({ history: [] }, null, 2))\""
   },
   "dependencies": {
     "@pixi/sound": "^6.0.1",

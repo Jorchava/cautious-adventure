@@ -58,3 +58,13 @@ export interface SpinRecord {
   win: number
   freeSpinsAwarded: number
 }
+
+export type SoundKey =
+  | 'reel_spin'
+  | 'reel_stop'
+  | 'win_small'
+  | 'win_medium'
+  | 'win_big'
+  | 'free_spins_trigger'
+  | 'button_click'
+  | 'autoplay_stop'
