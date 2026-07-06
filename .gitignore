@@ -26,9 +26,12 @@ docs/sessions/
 docs/pixi-v8-patterns.md
 OPEN_CODE_PROMPT*.md
 
+# Local session prompts and editor-specific files
+sessions/
+.vscode/
+env.d.ts
+
 # Editor
-.vscode/*
-!.vscode/extensions.json
 .idea
 .DS_Store
 *.suo
