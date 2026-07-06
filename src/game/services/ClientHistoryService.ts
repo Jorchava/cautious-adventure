@@ -2,7 +2,9 @@ import type { SpinRecord } from '@/types/game.types'
 import type { HistoryService } from './HistoryService'
 
 export class ClientHistoryService implements HistoryService {
-  constructor(private readonly baseUrl = 'http://localhost:3001') { }
+  constructor(
+    private readonly baseUrl = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3001'
+  ) { }
 
   async getHistory(limit = 10): Promise<SpinRecord[]> {
     // _limit removed — not supported in json-server v1 (treated as field filter)
