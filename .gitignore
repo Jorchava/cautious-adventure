@@ -8,17 +8,16 @@ dist-ssr/
 # Test coverage
 coverage/
 
-# Environment variables — NEVER commit actual values
+# Environment variables
 .env
 .env.*
 .env.local
 .env.production
 .env.staging
-# Allow example files — these contain no secrets
+# Allow example files
 !.env.example
 
 # Private governance and AI workflow files
-# Keep locally, not needed in public repo
 AGENTS.md
 SKILLS.md
 PROJECT_CONTEXT.md
@@ -29,7 +28,6 @@ OPEN_CODE_PROMPT*.md
 # Local session prompts and editor-specific files
 sessions/
 .vscode/
-env.d.ts
 
 # Editor
 .idea
@@ -42,3 +40,6 @@ env.d.ts
 
 # OS
 Thumbs.db
+
+# local history data
+db.json

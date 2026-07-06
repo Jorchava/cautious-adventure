@@ -8,14 +8,14 @@ A browser-based 5-reel, 3-row video slot machine with neon/cyberpunk aesthetic, 
 
 ## What This Demonstrates
 
-| Skill | Implementation |
-|-------|---------------|
-| **PixiJS v8** | Scene graph, async Application.init, reel deceleration animation, BlurFilter glow, ParticleContainer win burst, Graphics paylines, mask-based viewport clipping |
-| **Layered architecture** | Game logic layer (`src/game/`) has zero imports from Vue, PixiJS, or Pinia — fully unit-testable without DOM |
-| **Typed FSM** | Custom 8-state finite state machine with explicit transitions, guards, and TypeScript discriminated unions |
-| **TDD discipline** | 177 tests covering game engine, stores, composables, and components. Game logic has ~95% branch coverage |
-| **REST integration** | Spin history persisted via json-server mock API. HistoryService interface enables swap to any backend |
-| **Vue/PixiJS bridge** | Pinia watchers dispatch PixiJS scene actions. No game logic leaks into the render layer |
+| Skill                    | Implementation                                                                                                                                                  |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **PixiJS v8**            | Scene graph, async Application.init, reel deceleration animation, BlurFilter glow, ParticleContainer win burst, Graphics paylines, mask-based viewport clipping |
+| **Layered architecture** | Game logic layer (`src/game/`) has zero imports from Vue, PixiJS, or Pinia — fully unit-testable without DOM                                                    |
+| **Typed FSM**            | Custom 8-state finite state machine with explicit transitions, guards, and TypeScript discriminated unions                                                      |
+| **TDD discipline**       | 177 tests covering game engine, stores, composables, and components. Game logic has ~95% branch coverage                                                        |
+| **REST integration**     | Spin history persisted via json-server mock API. HistoryService interface enables swap to any backend                                                           |
+| **Vue/PixiJS bridge**    | Pinia watchers dispatch PixiJS scene actions. No game logic leaks into the render layer                                                                         |
 
 ---
 
@@ -75,13 +75,31 @@ Any → ERROR → IDLE
 
 ## Getting Started
 
+**Requirements:** Node.js 20+ · pnpm 9+
+
 ```bash
-pnpm install          # Install dependencies
-pnpm api &            # Start json-server on port 3001 (in background)
-pnpm dev              # Start Vite dev server on port 5173
+# 1. Install dependencies
+pnpm install
+
+# 2. Create your local history database
+cp db.example.json db.json       # Mac/Linux
+copy db.example.json db.json     # Windows
 ```
 
-Open `http://localhost:5173`. Play the game.
+Then open **two terminals**:
+
+```bash
+# Terminal 1 — History API (json-server on port 3001)
+pnpm api
+
+# Terminal 2 — Game (Vite dev server on port 5173)
+pnpm dev
+```
+
+Open `http://localhost:5173` in your browser.
+
+> **Note:** The history panel requires `pnpm api` running locally.  
+> The live demo at [demo URL] runs without a backend — history shows an offline notice. See [Backend Integration](#backend-integration) for full setup.
 
 > **Note on audio:** Audio is wired via `@pixi/sound` but requires `.ogg` files in `src/assets/audio/`. The game runs silently when files are absent — no crash, no console noise. See `docs/sound-credits.md` for recommended CC0 sources.
 
