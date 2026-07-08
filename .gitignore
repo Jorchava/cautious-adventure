@@ -24,6 +24,8 @@ PROJECT_CONTEXT.md
 docs/sessions/
 docs/pixi-v8-patterns.md
 OPEN_CODE_PROMPT*.md
+.agents/
+.opencode/
 
 # Local session prompts and editor-specific files
 sessions/

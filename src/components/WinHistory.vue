@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useHistoryStore } from '@/stores/useHistoryStore'
 
 const historyStore = useHistoryStore()
+
+// Offline when in production and no backend URL configured
+const isOffline = computed(() =>
+  !import.meta.env.DEV && !import.meta.env.VITE_API_BASE_URL
+)
 
 onMounted(async () => {
   await historyStore.fetchHistory()
@@ -15,30 +20,27 @@ onMounted(async () => {
       HISTORY
     </h3>
 
-    <div
-      v-if="historyStore.isLoading"
-      class="history-loading"
-    >
+    <div v-if="historyStore.isLoading" class="history-loading">
       Loading...
     </div>
 
-    <div
-      v-else-if="historyStore.records.length === 0"
-      class="history-empty"
-    >
-      No history yet
-    </div>
+    <template v-else-if="historyStore.records.length === 0">
+      <!-- Show offline notice in production without backend -->
+      <div v-if="isOffline" class="history-offline">
+        <span class="offline-icon">ℹ</span>
+        History requires an API backend.
 
-    <ul
-      v-else
-      class="history-list"
-    >
-      <li
-        v-for="record in historyStore.records"
-        :key="record.id"
-        class="history-row"
-        :class="{ 'is-win': record.win > 0 }"
-      >
+        <a href="https://github.com/Jorchava/cautious-adventure#backend-integration" class="offline-link">Setup
+          guide</a>
+      </div>
+      <div v-else class="history-empty">
+        No history yet
+      </div>
+    </template>
+
+    <ul v-else class="history-list">
+      <li v-for="record in historyStore.records" :key="record.id" class="history-row"
+        :class="{ 'is-win': record.win > 0 }">
         <span class="record-bet">BET {{ record.bet }}</span>
         <span class="record-win">
           {{ record.win > 0 ? `+${record.win}` : '—' }}
@@ -46,10 +48,7 @@ onMounted(async () => {
       </li>
     </ul>
 
-    <p
-      v-if="historyStore.error"
-      class="history-error"
-    >
+    <p v-if="historyStore.error" class="history-error">
       {{ historyStore.error }}
     </p>
   </div>
@@ -104,6 +103,33 @@ onMounted(async () => {
   color: #556677;
   text-align: center;
   padding: 8px 0;
+}
+
+.history-offline {
+  font-size: 0.72rem;
+  color: #556677;
+  text-align: center;
+  padding: 8px 4px;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+
+.offline-icon {
+  font-size: 1rem;
+  color: #334455;
+}
+
+.offline-link {
+  color: #00ffff;
+  font-size: 0.68rem;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .history-error {

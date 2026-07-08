@@ -1,5 +1,13 @@
 # Neon Reels 🎰
 
+[![Live Demo](https://img.shields.io/badge/Live-Demo-00ffff?style=flat-square&logo=netlify)](https://neonreels.netlify.app)
+[![CI](https://github.com/Jorchava/cautious-adventure/actions/workflows/ci.yml/badge.svg)](https://github.com/Jorchava/cautious-adventure/actions/workflows/ci.yml)
+[![Tests](https://img.shields.io/badge/Tests-177%20passing-brightgreen?style=flat-square)](https://github.com/Jorchava/cautious-adventure)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](./LICENSE)
+
+> **[Live Demo →](https://neonreels.netlify.app)** — Fully playable in the browser.  
+> History panel requires local API setup — [see docs](./docs/backend-integration.md).
+
 A browser-based 5-reel, 3-row video slot machine with neon/cyberpunk aesthetic, built with PixiJS v8 and Vue 3. Senior frontend portfolio piece demonstrating layered architecture, a typed finite state machine, TDD-covered game logic, and REST-backed spin history.
 
 **Stack:** Vue 3 · TypeScript (strict) · PixiJS v8 · Pinia · SCSS · Vite · Vitest · json-server
@@ -22,24 +30,24 @@ A browser-based 5-reel, 3-row video slot machine with neon/cyberpunk aesthetic, 
 ## Architecture
 
 ```
-┌───────────────────────────────────────────────┐
-│  Vue UI Layer                                 │
-│  BetPanel · SpinButton · Paytable · WinHistory│
-│  — Captures user input. Contains zero game    │
-│    logic.                                     │
-├───────────────────────────────────────────────┤
-│  Pinia State Layer                            │
-│  useGameStore · useHistoryStore               │
-│  — Single source of truth. Bridges all layers.│
-├──────────────────────┬────────────────────────┤
-│  PixiJS Render Layer │  Game Logic Layer      │
-│  SceneManager        │  RNGEngine             │
-│  GameScene           │  PaylineEvaluator      │
-│  ReelComponent       │  SpinService           │
-│  WinParticles        │  HistoryService        │
-│  — Reads Pinia.      │  — Pure TypeScript.    │
-│    No game logic.    │    Zero framework deps.│
-└──────────────────────┴────────────────────────┘
+┌─────────────────────────────────────────────────┐
+│  Vue UI Layer                                   │
+│  BetPanel · SpinButton · Paytable · WinHistory  │
+│  — Captures user input. Contains zero game      │
+│    logic.                                       │
+├─────────────────────────────────────────────────┤
+│  Pinia State Layer                              │
+│  useGameStore · useHistoryStore                 │
+│  — Single source of truth. Bridges all layers.  │
+├──────────────────────┬──────────────────────────┤
+│  PixiJS Render Layer │  Game Logic Layer        │
+│  SceneManager        │  RNGEngine               │
+│  GameScene           │  PaylineEvaluator        │
+│  ReelComponent       │  SpinService             │
+│  WinParticles        │  HistoryService          │
+│  — Reads Pinia.      │  — Pure TypeScript.      │
+│    No game logic.    │    Zero framework deps.  │
+└──────────────────────┴──────────────────────────┘
 ```
 
 - **Vue UI Layer:** Reads Pinia state. Dispatches user actions via the game machine composable. No business logic.
@@ -75,6 +83,10 @@ Any → ERROR → IDLE
 
 ## Getting Started
 
+Try the **[live demo](https://neonreels.netlify.app)** instantly in your browser — no setup needed.
+
+To run locally with full history persistence:
+
 **Requirements:** Node.js 20+ · pnpm 9+
 
 ```bash
@@ -98,8 +110,14 @@ pnpm dev
 
 Open `http://localhost:5173` in your browser.
 
-> **Note:** The history panel requires `pnpm api` running locally.  
-> The live demo at [demo URL] runs without a backend — history shows an offline notice. See [Backend Integration](#backend-integration) for full setup.
+---
+
+## Backend Integration
+
+The live demo runs without a backend — history shows an offline notice.  
+For full local setup including history persistence, see [docs/backend-integration.md](./docs/backend-integration.md).
+
+> **Note:** The history panel requires `pnpm api` running locally.
 
 > **Note on audio:** Audio is wired via `@pixi/sound` but requires `.ogg` files in `src/assets/audio/`. The game runs silently when files are absent — no crash, no console noise. See `docs/sound-credits.md` for recommended CC0 sources.
 
@@ -123,7 +141,7 @@ Open `http://localhost:5173` in your browser.
 ## Testing
 
 ```bash
-pnpm vitest run       # 177 tests, all passing
+pnpm vitest run       # >177 tests, all passing
 pnpm tsc --noEmit     # Zero TypeScript errors (strict mode)
 pnpm lint             # Zero ESLint errors/warnings
 pnpm vitest --coverage # ~95% line coverage on game logic
@@ -148,3 +166,44 @@ PixiJS rendering is tested manually — the design extracts all pure math into `
 ## License
 
 MIT
+
+Copyright (c) 2026 Jorchava
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+GAMBLING DISCLAIMER
+
+This software is provided for educational, portfolio, and reference purposes
+only. It is a technology demonstration and does not constitute a gambling
+product.
+
+- No real money is involved in this software.
+- The random number generation is client-side and is NOT certified for use in
+  regulated gambling environments.
+- Deploying this software or any derivative work as a real-money gambling
+  service without the appropriate gaming licenses, certified server-side RNG,
+  and regulatory compliance is illegal in most jurisdictions.
+- The author accepts no responsibility for regulatory violations arising from
+  misuse of this software.
+
+Any organization intending to use this codebase in a commercial gambling
+context must independently obtain all required licenses and replace the
+client-side RNG with a certified, audited server-side implementation.

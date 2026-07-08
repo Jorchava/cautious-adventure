@@ -16,6 +16,15 @@ export const useHistoryStore = defineStore('history', () => {
   }
 
   async function fetchHistory(): Promise<void> {
+    // In production without VITE_API_BASE_URL, skip the fetch gracefully.
+    // The history panel will show the offline notice defined in WinHistory.vue.
+    const isProduction = !import.meta.env.DEV
+    const hasBackend = !!import.meta.env.VITE_API_BASE_URL
+
+    if (isProduction && !hasBackend) {
+      return  // no error set — WinHistory detects empty records + no loading
+    }
+
     error.value = null
     isLoading.value = true
     try {
@@ -31,7 +40,13 @@ export const useHistoryStore = defineStore('history', () => {
     const timestamp = new Date().toISOString()
     const id = crypto.randomUUID()
     const record: SpinRecord = { id, timestamp, ...data }
-    records.value.unshift(record)
+    records.value.unshift(record) // optimistic — always show in session
+
+    // Only persist to API when backend is available
+    const isProduction = !import.meta.env.DEV
+    const hasBackend = !!import.meta.env.VITE_API_BASE_URL
+    if (isProduction && !hasBackend) return
+
     try {
       await service.recordSpin({ timestamp, ...data })
     } catch {
