@@ -20,27 +20,46 @@ onMounted(async () => {
       HISTORY
     </h3>
 
-    <div v-if="historyStore.isLoading" class="history-loading">
+    <div
+      v-if="historyStore.isLoading"
+      class="history-loading"
+    >
       Loading...
     </div>
 
     <template v-else-if="historyStore.records.length === 0">
       <!-- Show offline notice in production without backend -->
-      <div v-if="isOffline" class="history-offline">
+      <div
+        v-if="isOffline"
+        class="history-offline"
+      >
         <span class="offline-icon">ℹ</span>
         History requires an API backend.
 
-        <a href="https://github.com/Jorchava/cautious-adventure#backend-integration" class="offline-link">Setup
+        <a
+          href="https://github.com/Jorchava/cautious-adventure#backend-integration"
+          class="offline-link"
+        >Setup
           guide</a>
       </div>
-      <div v-else class="history-empty">
+      <div
+        v-else
+        class="history-empty"
+      >
         No history yet
       </div>
     </template>
 
-    <ul v-else class="history-list">
-      <li v-for="record in historyStore.records" :key="record.id" class="history-row"
-        :class="{ 'is-win': record.win > 0 }">
+    <ul
+      v-else
+      class="history-list"
+    >
+      <li
+        v-for="record in historyStore.records"
+        :key="record.id"
+        class="history-row"
+        :class="{ 'is-win': record.win > 0 }"
+      >
         <span class="record-bet">BET {{ record.bet }}</span>
         <span class="record-win">
           {{ record.win > 0 ? `+${record.win}` : '—' }}
@@ -48,7 +67,10 @@ onMounted(async () => {
       </li>
     </ul>
 
-    <p v-if="historyStore.error" class="history-error">
+    <p
+      v-if="historyStore.error"
+      class="history-error"
+    >
       {{ historyStore.error }}
     </p>
   </div>
